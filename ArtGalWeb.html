@@ -1,0 +1,539 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aesthetic Responsive Art Page</title>
+  <script defer src="Script.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: url('starry.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: -1;
+    }
+
+    header {
+      background: rgba(51, 51, 51, 0.8);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      position: relative;
+    }
+    header h1 { font-size: 1.2rem; }
+
+    .sidebar-toggle {
+      background: linear-gradient(90deg, #4f46e5, #3b82f6);
+      color: white;
+      font-size: 1.3rem;
+      font-weight: bold;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: 0.3s;
+      border: none;
+    }
+    .sidebar-toggle:hover {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      transform: translateY(-2px);
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    @media (min-width: 601px) {
+      .container { flex-direction: row; }
+      main { flex: 2; }
+      aside { flex: 1; }
+    }
+
+    main {
+      flex: 2;
+      background: rgba(255,255,255,0.9);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    aside {
+      flex: 1;
+      background: rgba(238,238,238,0.95);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      display: none;
+    }
+    aside.show { display: block; }
+    @media (max-width: 600px) { aside { display: none !important; } }
+
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      background: linear-gradient(90deg, #1e3a8a, #facc15);
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .nav-bar a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+    .nav-bar a:hover {
+      background: rgba(255,255,255,0.2);
+      transform: scale(1.05);
+    }
+
+    .card {
+      background: rgba(255,255,255,0.95);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    h1, h2 { text-align: center; margin-bottom: 10px; color: #222; }
+
+    .profile-container, .volleyball-container {
+      text-align: center;
+      margin: 15px 0;
+    }
+    .profile-container img,
+    .volleyball-container img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #4f46e5;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .responsive-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .responsive-gallery img {
+      width: 220px;   
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+      transition: transform 0.3s;
+    }
+    .responsive-gallery img:hover { transform: scale(1.05); }
+
+    .art-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      gap: 15px;
+    }
+    .art-item img {
+      width: 160px;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    }
+    .art-description {
+      flex: 1;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-top: 15px;
+    }
+    .calendar div {
+      background: #fafafa;
+      border: 1px solid #ccc;
+      padding: 10px 0;
+      text-align: center;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    form {
+      background: #fafafa;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    }
+    form label { display: block; margin-top: 10px; font-weight: bold; }
+    form input, form textarea, form select {
+      width: 100%; padding: 8px; margin-top: 5px;
+      border: 1px solid #ccc; border-radius: 5px;
+    }
+    form input[type="submit"] {
+      margin-top: 12px;
+      background: linear-gradient(90deg, #1e3a8a, #facc15);
+      color: white; border: none;
+      font-weight: bold; cursor: pointer;
+    }
+
+    footer {
+      background: rgba(51, 51, 51, 0.8);
+      color: white;
+      text-align: center;
+      padding: 0.7rem;
+      margin-top: auto;
+    }
+
+    #gallery {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.95);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 12px;
+      align-items: center;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Unique Responsive Art Page</h1>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+  </header>
+
+  <div class="container">
+    <main>
+      <nav class="nav-bar">
+        <a href="#intro" data-selection="intro">Introduction</a>
+        <a href="#blog" data-selection="blog">Blog</a>
+        <a href="#art" data-selection="art">Art</a>
+        <a href="#gallery" data-selection="gallery">Gallery</a>
+        <a href="#feedback" data-selection="feedback">Feedback</a>
+      </nav>
+
+      <section class="card" id="intro">
+        <h2>ARTHUB</h2>
+        <div class="profile-container">
+          <img src="assets/ART.png" alt="Community Logo">
+        </div>
+        <p>
+          <strong>Maligayang pagdating sa aming Pahina!</strong><br><br>
+          Ang aming layunin ay lumikha ng isang bukas at makulay na espasyo para sa lahat ng mahilig sa sining.  
+          Dito sa <strong>ArtHUB</strong>, hinihikayat namin ang bawat isa na magpahayag ng kanilang sarili sa pamamagitan ng sining—mula sa pagguhit, pagpipinta, digital art, hanggang sa iba’t ibang malikhaing anyo.  
+        </p>
+        <p>
+          Inaanyayahan namin ang lahat ng artists, baguhan man o propesyonal, na maging bahagi ng aming komunidad.  
+          Sa pamamagitan ng pagtutulungan at pagbabahagi ng talento, sama-sama nating bubuo ng isang pamayanang nag-uudyok ng inspirasyon, pagkatuto, at pagkakaibigan.
+        </p>
+        <p>
+          Sumali na at maging kabahagi ng isang komunidad na tunay na nagpapahalaga sa sining at malikhaing pagpapahayag.
+        </p>
+        <div class="volleyball-container">
+         
+        </div>
+      </section>
+
+      <section class="card" id="blog">
+        <h1>Selling, Commissions, and Bidding</h1>
+        <p><strong>ArtHUB</strong> · <time datetime="2025-08-27">CREATE YOUR WORLD!</time></p>
+
+        <p>
+          In today’s creative world, artists have many opportunities to share their work beyond simple exhibitions.  
+          Selling artworks allows creators to earn directly from their passion, whether through physical galleries or online platforms.  
+          By offering their creations for sale, artists not only gain income but also connect with people who truly appreciate their work.  
+        </p>
+
+        <p>
+          Commissions open another exciting door for artists.  
+          Clients can request personalized pieces that capture unique ideas, stories, or emotions.  
+          Accepting commissions gives artists the chance to grow, adapt to different challenges, and expand their portfolio with meaningful projects.  
+        </p>
+
+        <p>
+          Art bidding, on the other hand, provides a dynamic way of valuing creativity.  
+          Through auctions, artworks can find their highest worth as collectors and art lovers place bids.  
+          This not only rewards the artist but also highlights the true demand and appreciation for their craft.  
+        </p>
+
+        <p>
+          Whether selling, accepting commissions, or participating in art bidding, each step helps artists build sustainable careers and strengthen the community of creatives who inspire one another.  
+        </p>
+
+        <div class="responsive-gallery">
+          <img src="assets/Ian (Cat Incident).jpg" alt="Art Sale Example">
+          <img src="assets/Beauty.jpg" alt="Commission Example">
+          <img src="assets/Portrait.jpg" alt="Bidding Example">
+        </div>
+      </section>
+
+      <section class="card" id="art">
+        <h2>Types of Art</h2>
+
+        <div class="art-item">
+          <img src="char.jpg" alt="Charcoal Drawing" />
+          <div class="art-description">
+            <h3>Charcoal Drawing</h3>
+            <p>Charcoal drawing is one of the most expressive and versatile forms of art. It allows artists to create deep shadows, bold lines, and soft shading with ease. By using different types of charcoal such as vine or compressed sticks, you can experiment with textures and tones that bring a drawing to life.</p>
+            <p>To start, lightly sketch your outline with a pencil before applying charcoal. Smudging with fingers or blending stumps helps in achieving gradients and realistic effects. Erasers also play a vital role in creating highlights and refining details within the piece.</p>
+            <p>Mastering charcoal requires patience and control, but it is an excellent medium for capturing emotions, portraits, and dramatic compositions. It is often chosen by beginners and professionals alike for its ability to produce striking contrasts and quick results.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="colo.jpg" alt="Color Pencil Drawing" />
+          <div class="art-description">
+            <h3>Color Pencil Drawing</h3>
+            <p>Color pencil art is widely appreciated for its vibrant tones and precision. With layering techniques, artists can achieve realistic shading, smooth gradients, and detailed textures. High-quality colored pencils allow for richer pigmentation and blending.</p>
+            <p>To begin, start with light layers of color and gradually build them up. Pressing harder with the pencil produces darker tones, while lighter strokes add subtlety. Blending tools or even tissue paper can be used to merge colors seamlessly.</p>
+            <p>This medium is ideal for beginners because it is clean, portable, and easy to control. Whether used for portraits, landscapes, or imaginative works, colored pencils offer endless possibilities for creative expression.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="paint.jpg" alt="Painting Example" />
+          <div class="art-description">
+            <h3>Painting (Oil / Acrylic / Watercolor)</h3>
+            <p>Painting is one of the oldest and most dynamic forms of art, ranging from classical oil paintings to modern acrylics and watercolors. Each medium offers unique qualities—oils provide depth and blending time, acrylics dry quickly and allow layering, while watercolors create soft and translucent effects.</p>
+            <p>The process usually begins with preparing a canvas or paper and sketching a light outline. Artists then apply layers of paint using brushes, palette knives, or even unconventional tools to achieve their desired textures and styles.</p>
+            <p>Painting encourages experimentation and creativity, making it an essential practice for both beginners and experienced artists. It is a timeless way to express ideas, emotions, and beauty through vibrant colors and brushstrokes.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="grap.jpg" alt="Graphite Drawing" />
+          <div class="art-description">
+            <h3>Graphite Drawing</h3>
+            <p>Graphite drawing is a classic and widely practiced art form, often associated with sketching and detailed studies. It is flexible, allowing artists to create fine lines, soft shading, and intricate textures using pencils of varying hardness.</p>
+            <p>To start, select the right grade of graphite pencil—softer pencils (B) are darker and great for shading, while harder pencils (H) are lighter and useful for fine details. Blending stumps or tissues help smooth out the shading for realistic effects.</p>
+            <p>This medium is beginner-friendly yet sophisticated enough for advanced artworks. Graphite drawing is perfect for practice, learning proportions, and developing precision, making it a foundation for many aspiring artists.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="point.jpg" alt="Pointillism" />
+          <div class="art-description">
+            <h3>Pointillism</h3>
+            <p>Pointillism is a painting technique that uses tiny dots of color placed closely together to form an image. When viewed from a distance, the dots blend visually to create vibrant scenes.</p>
+            <p>This technique, pioneered by Georges Seurat, emphasizes precision and patience. Artists use small brushstrokes or pen points to build texture, color depth, and light.</p>
+            <p>It is a rewarding style that teaches patience and a deeper understanding of color theory and optical mixing.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="imp.jpg" alt="Impressionism" />
+          <div class="art-description">
+            <h3>Impressionism</h3>
+            <p>Impressionism focuses on capturing the fleeting effects of light and color in a scene rather than precise detail. Artists use loose brushwork and vibrant palettes.</p>
+            <p>It emerged in 19th-century France and revolutionized art by emphasizing mood and atmosphere over realism.</p>
+            <p>This style is perfect for experimenting with lighting, seasons, and spontaneous outdoor painting.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="abs.jpg" alt="Abstract Art" />
+          <div class="art-description">
+            <h3>Abstract Art</h3>
+            <p>Abstract art breaks away from realistic representation and uses shapes, colors, and forms to express emotions or ideas.</p>
+            <p>It allows complete creative freedom and encourages viewers to interpret the artwork in their own way.</p>
+            <p>This style is ideal for exploring pure expression and emotion without the constraints of realism.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="cub.jpg" alt="Cubism" />
+          <div class="art-description">
+            <h3>Cubism</h3>
+            <p>Cubism deconstructs subjects into geometric shapes and reassembles them in abstract compositions.</p>
+            <p>Founded by Pablo Picasso and Georges Braque, it emphasizes multiple perspectives in one artwork.</p>
+            <p>This approach challenges traditional viewpoints and inspires innovative thinking.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="sur.jpg" alt="Surrealism" />
+          <div class="art-description">
+            <h3>Surrealism</h3>
+            <p>Surrealism blends dreamlike imagery with reality, often producing strange or fantastical scenes.</p>
+            <p>Inspired by the subconscious, it allows artists to express thoughts beyond rational understanding.</p>
+            <p>It’s ideal for storytelling and imaginative concept exploration.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="dig.jpg" alt="Digital Art" />
+          <div class="art-description">
+            <h3>Digital Art</h3>
+            <p>Digital art uses software and digital tools to create illustrations, paintings, and designs.</p>
+            <p>It offers limitless possibilities for editing, layering, and experimentation.</p>
+            <p>Perfect for modern artists exploring animation, concept art, and visual media.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="mix.jpg" alt="Mixed Media" />
+          <div class="art-description">
+            <h3>Mixed Media</h3>
+            <p>Mixed media combines multiple art forms, such as painting, collage, and drawing, into one piece.</p>
+            <p>It allows for creative freedom and texture exploration, often producing unique results.</p>
+            <p>This style encourages experimentation with unconventional materials.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="gra.jpg" alt="Graffiti Art" />
+          <div class="art-description">
+            <h3>Graffiti Art</h3>
+            <p>Graffiti art transforms public spaces into vibrant canvases using spray paint and bold designs.</p>
+            <p>It often carries social or political messages and emphasizes self-expression.</p>
+            <p>This style blends art with activism and community engagement.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="col.jpg" alt="Collage Art" />
+          <div class="art-description">
+            <h3>Collage Art</h3>
+            <p>Collage art involves assembling different materials like paper, photos, and fabric into a single artwork.</p>
+            <p>It creates new narratives by combining diverse elements into cohesive compositions.</p>
+            <p>This style encourages recycling materials into meaningful stories.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="lin.jpg" alt="Line Art" />
+          <div class="art-description">
+            <h3>Line Art</h3>
+            <p>Line art uses simple lines without shading or color to define form and structure.</p>
+            <p>It highlights composition, proportion, and movement in its purest form.</p>
+            <p>This minimalist style is excellent for developing drawing fundamentals.</p>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="pop.jpg" alt="Pop Art" />
+          <div class="art-description">
+            <h3>Pop Art</h3>
+            <p>Pop Art celebrates popular culture with bold colors and imagery from advertising, comics, and media.</p>
+            <p>It challenges traditional fine art by blending high and low culture.</p>
+            <p>This playful style is eye-catching and impactful.</p>
+          </div>
+        </div>
+
+      </section>
+
+      <section id="gallery" class="card">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+          <img src="assets/" alt="Gallery neo 1">
+          <img src="assets/" alt="Gallery neo 2">
+          <img src="assets/" alt="Gallery neo 3">
+          <img src="assets/" alt="Gallery neo 4">
+          <img src="assets/" alt="Gallery neo 5">
+          <img src="assets/" alt="Gallery neo 6">
+          <img src="assets/" alt="Gallery neo 7">
+          <img src="assets/" alt="Gallery neo 8">
+          <img src="assets/" alt="Gallery neo 9">
+          <img src="assets/" alt="Gallery neo 10">
+          <img src="assets/" alt="Gallery neo 11">
+          <img src="assets/" alt="Gallery neo 12">
+          <img src="assets/" alt="Gallery neo 13">
+          <img src="assets/" alt="Gallery neo 14">
+          <img src="assets/" alt="Gallery neo 15">
+          <img src="assets/" alt="Gallery neo 16">
+          <img src="assets/" alt="Gallery neo 17">
+          <img src="assets/" alt="Gallery neo 18">
+          <img src="assets/" alt="Gallery neo 19">
+          <img src="assets/" alt="Gallery neo 20">
+        </div>
+      </section>
+
+      <section class="card" id="feedback">
+        <h2>Feedback Form</h2>
+        <form>
+          <label for="name">Full Name:</label>
+          <input type="text" id="name" placeholder="Enter your full name" required>
+          <label for="email">Email:</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+          <label for="comments">Comments:</label>
+          <textarea id="comments" rows="4" placeholder="Write your feedback..." required></textarea>
+          <input type="submit" value="Submit Feedback">
+        </form>
+      </section>
+    </main>
+
+    <aside id="sidebar">
+      <h2>About Myself as an Artist</h2>
+      <p>I started drawing seriously in 2022. At first, it was just a hobby to pass the time, but as the months went by, I realized that art was more than that—it became a part of my life and identity. The first sketches I made were simple, but they motivated me to keep going and improve every day.</p>
+      <p>My inspiration comes from my co-artists. Watching their works and learning from their techniques gave me the courage to explore my own creativity. Their passion and dedication to art pushed me to try new styles and express myself without fear of making mistakes.</p>
+      <p>Through art, I found not only happiness but also opportunities. With my artworks, I have been able to earn money, and with that, I can buy the things I want. Art has given me freedom and confidence, and it continues to shape the way I live my life today.</p>
+
+      <h3>Art Related Links</h3>
+      <ul>
+        <li><a href="#">Sketching Techniques</a></li>
+        <li><a href="#">Color Theory Basics</a></li>
+        <li><a href="#">Famous Artists & Their Works</a></li>
+        <li><a href="#">Digital Art Tips</a></li>
+        <li><a href="#">Watercolor Painting Ideas</a></li>
+        <li><a href="#">Oil Painting for Beginners</a></li>
+        <li><a href="#">Charcoal Drawing Tutorials</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer>
+    <p>© 2025 ArtHub. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function toggleSidebar() {
+      const aside = document.getElementById('sidebar');
+      aside.classList.toggle('show');
+    }
+
+    document.querySelectorAll('.nav-bar a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
