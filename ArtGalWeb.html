@@ -8,11 +8,42 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    .background-container {
+      background-image: url('star.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 0;
+      padding: 0;
+    }
+
+    .background-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    .overlay-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+      text-align: center;
+    }
+
     body {
       font-family: "Segoe UI", Tahoma, sans-serif;
       line-height: 1.6;
-      display: flex;
-      flex-direction: column;
       min-height: 100vh;
       background: url('starry.jpg') no-repeat center center fixed;
       background-size: cover;
@@ -31,13 +62,13 @@
     header {
       background: rgba(51, 51, 51, 0.8);
       color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-      position: relative;
+      text-align: center;
+      padding: 0.8rem;
     }
-    header h1 { font-size: 1.2rem; }
+    header h1 {
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+    }
 
     .sidebar-toggle {
       background: linear-gradient(90deg, #4f46e5, #3b82f6);
@@ -51,17 +82,18 @@
       transition: 0.3s;
       border: none;
     }
+
     .sidebar-toggle:hover {
       background: linear-gradient(90deg, #3b82f6, #2563eb);
       transform: translateY(-2px);
     }
-    .container {
-      width: 100%;
-      max-width: 100%;
-      padding-left: 5vw;
-      padding-right: 5vw;
-      margin: 0 auto;
-    }
+
+.container {
+  width: 100vw; /* full screen width */
+  max-width: 100%;
+  margin: 0;
+  padding: 0; /* no internal spacing on container */
+}
 
     @media (min-width: 601px) {
       .container { flex-direction: row; }
@@ -69,22 +101,24 @@
       aside { flex: 1; }
     }
 
-    main {
-      flex: 2;
-      background: rgba(255,255,255,0.9);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
+main {
+  background: rgba(255,255,255,0.9);
+  padding: 40px; /* gives breathing space but covers full width */
+  border-radius: 0; /* remove rounded corners for full-width effect */
+  box-shadow: none; /* optional: remove shadow for seamless look */
+  margin: 80px 0 40px 0; /* top margin to clear navbar */
+  width: 100vw; /* ensures full horizontal stretch */
+  max-width: 100%;
+}
 
     aside {
-      flex: 1;
+      display: none;
       background: rgba(238,238,238,0.95);
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      display: none;
     }
+
     aside.show { display: block; }
     @media (max-width: 600px) { aside { display: none !important; } }
 
@@ -100,17 +134,106 @@
       border-radius: 10px;
       margin-bottom: 20px;
     }
-    .nav-bar a {
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      transition: 0.3s;
+
+    .nav-bar {
+      position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     display: flex;
+     justify-content: space-between; /* ensures links on left, button on right */
+     align-items: center;
+     background: linear-gradient(90deg, #1e3a8a, #facc15);
+     padding: 12px 24px;
+     box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+     z-index: 1000;
     }
+
+    .nav-bar a {
+     color: white;
+     text-decoration: none;
+     font-weight: 600;
+     padding: 10px 16px;
+     border-radius: 8px;
+     background: linear-gradient(135deg, #4f46e5, #3b82f6);
+     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+     transition: all 0.25s ease;
+    }
+
     .nav-bar a:hover {
-      background: rgba(255,255,255,0.2);
-      transform: scale(1.05);
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+
+.hero-image {
+  width: 100vw;
+  height: 100vh;
+  background: url('star.jpg') center center / contain no-repeat black;
+  margin-top: 60px; /* below navbar */
+  position: relative;
+}
+.hero-image {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: url('star.jpg') center center / cover no-repeat;
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* show full image, no cropping */
+  object-position: center; /* keep centered */
+  display: block;
+  background-color: black; /* fills any empty space neatly */
+}
+
+.hero-text {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.7);
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-text p {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+    .nav-links {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: all 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
 
     .card {
@@ -182,13 +305,11 @@
       color: white; border: none;
       font-weight: bold; cursor: pointer;
     }
-
     footer {
       background: rgba(51, 51, 51, 0.8);
       color: white;
       text-align: center;
       padding: 0.7rem;
-      margin-top: auto;
     }
 
     #gallery {
@@ -221,24 +342,29 @@
 <body>
   <header>
     <h1>Unique Responsive Art Page</h1>
-    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
   </header>
 
   <div class="container">
     <main>
-      <nav class="nav-bar">
-        <a href="#intro" data-selection="intro">Introduction</a>
-        <a href="#blog" data-selection="blog">Blog</a>
-        <a href="#art" data-selection="art">Art</a>
-        <a href="#gallery" data-selection="gallery">Gallery</a>
-        <a href="#feedback" data-selection="feedback">Feedback</a>
-      </nav>
+  <nav class="nav-bar">
+    <div class="nav-links">
+      <a href="#intro">Introduction</a>
+      <a href="#blog">Blog</a>
+      <a href="#art">Art</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#feedback">Feedback</a>
+    </div>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+  </nav>
 
-      <section class="card" id="intro">
+      <section class="hero-image" id="intro">
         <h2>ArtHUB</h2>
-        <div class="profile-container">
-          <img src="assets/ART.png" alt="Community Logo">
-        </div>
+  <img src="assets/Star.jpg" alt="Art Showcase Hero">
+ <div class="background-container">
+  <div class="overlay-content">
+  </div>
+</div>
+
         <p>
           <strong>Maligayang pagdating sa aming Pahina!</strong><br><br>
           Ang aming layunin ay lumikha ng isang bukas at makulay na espasyo para sa lahat ng mahilig sa sining.  
@@ -530,18 +656,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
