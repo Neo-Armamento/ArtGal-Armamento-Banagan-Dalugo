@@ -365,6 +365,49 @@ main {
       margin: 0 auto; 
       border: none;     
     }
+    .card img:not(#intro img) {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    #art img {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      display: inline-block;
+      margin: 10px;
+      object-fit: cover;
+      border-radius: 10px;
+      vertical-align: middle;
+    }
+    .responsive-gallery {
+      text-align: center; 
+    }
+    .responsive-gallery img {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      margin: 10px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    #intro {
+      background: none;
+      box-shadow: none;
+      padding: 0;
+      margin: 0 auto;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      max-width: 100%;
+    }
     #intro {
       background: none;
       box-shadow: none;
@@ -376,7 +419,6 @@ main {
       align-items: center;
       flex-direction: column;
     }
-
     #intro img {
       display: block;
       margin: 0 auto;
@@ -386,12 +428,9 @@ main {
       object-fit: contain;
       border-radius: 10px;
     }
-
     #intro .background-container {
       background: none;
     }
-
-
   </style>
 </head>
 <body>
@@ -711,3 +750,4 @@ main {
   </script>
 </body>
 </html>
+
