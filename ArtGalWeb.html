@@ -395,42 +395,32 @@ main {
       display: inline-block;
       vertical-align: middle;
     }
-    #intro {
-      background: none;
-      box-shadow: none;
-      padding: 0;
-      margin: 0 auto;
-      border: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      width: 100%;
-      max-width: 100%;
-    }
-    #intro {
-      background: none;
-      box-shadow: none;
-      padding: 0;
-      margin: 0 auto;
-      border: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-    #intro img {
-      display: block;
-      margin: 0 auto;
-      width: 100%;
-      max-width: 1200px;
-      height: auto;
-      object-fit: contain;
-      border-radius: 10px;
-    }
-    #intro .background-container {
-      background: none;
-    }
+   #intro {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 auto;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+}
+
+#intro img {
+  display: block;
+  margin: 0 auto;
+  width: 100vw; 
+  height: 100vh;
+  object-fit: cover;
+  border-radius: 0; 
+}
+
+#intro .background-container {
+  display: none;
+}
   </style>
 </head>
 <body>
