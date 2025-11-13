@@ -88,10 +88,10 @@
     }
 
 .container {
-  width: 100vw; /* full screen width */
+  width: 100vw; 
   max-width: 100%;
   margin: 0;
-  padding: 0; /* no internal spacing on container */
+  padding: 0;
 }
 
     @media (min-width: 601px) {
@@ -102,11 +102,11 @@
 
 main {
   background: rgba(255,255,255,0.9);
-  padding: 40px; /* gives breathing space but covers full width */
-  border-radius: 0; /* remove rounded corners for full-width effect */
-  box-shadow: none; /* optional: remove shadow for seamless look */
-  margin: 80px 0 40px 0; /* top margin to clear navbar */
-  width: 100vw; /* ensures full horizontal stretch */
+  padding: 40px; 
+  border-radius: 0;
+  box-shadow: none;
+  margin: 80px 0 40px 0; 
+  width: 100vw; 
   max-width: 100%;
 }
 
@@ -140,9 +140,9 @@ main {
      left: 0;
      width: 100%;
      display: flex;
-     justify-content: space-between; /* ensures links on left, button on right */
+     justify-content: space-between; 
      align-items: center;
-     background: linear-gradient(90deg, #1e3a8a, #facc15);
+     background: linear-gradient(90deg, #e9ff22, #241fb2);
      padding: 12px 24px;
      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
      z-index: 1000;
@@ -165,52 +165,6 @@ main {
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
 
-.hero-image {
-  width: 100vw;
-  height: 100vh;
-  background: url('star.jpg') center center / contain no-repeat black;
-  margin-top: 60px; /* below navbar */
-  position: relative;
-}
-.hero-image {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  background: url('star.jpg') center center / cover no-repeat;
-  margin-top: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
-
-.hero-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* show full image, no cropping */
-  object-position: center; /* keep centered */
-  display: block;
-  background-color: black; /* fills any empty space neatly */
-}
-
-.hero-text {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  text-shadow: 0 3px 8px rgba(0,0,0,0.7);
-}
-
-.hero-text h1 {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
-}
-
-.hero-text p {
-  font-size: 1.5rem;
-  font-weight: 300;
-}
 
     .nav-links {
       display: flex;
@@ -261,17 +215,22 @@ main {
     .responsive-gallery {
       display: flex;
       flex-wrap: wrap;
+      text-align: center;
       justify-content: center;
       gap: 15px;
     }
     .responsive-gallery img {
-      width: 220px;   
+      width: 100%;
+      max-width: 150px;  
+      height: auto;
+      margin: 10px; 
       border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-      transition: transform 0.3s;
+      object-fit: cover;
+      transition: transform 0.3s ease;
     }
-    .responsive-gallery img:hover { transform: scale(1.05); }
-
+    .responsive-gallery img:hover { 
+      transform: scale(1.05);
+    }
     .art-item {
       display: flex;
       align-items: flex-start;
@@ -382,34 +341,57 @@ main {
       border-radius: 10px;
       vertical-align: middle;
     }
-    .responsive-gallery {
-      text-align: center; 
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px; 
+      width: 250px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      overflow-x: hidden;
+      transition: 0.4s;
+      padding-top: 80px; 
+      z-index: 1000;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.5);
     }
-    .responsive-gallery img {
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 15px 30px; 
+      margin-bottom: 10px; 
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .sidebar a:hover {
+      background-color: #444;
+      transform: translateX(5px);
+    }
+    .sidebar-toggle {
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+      margin: 15px;
+      z-index: 1100;
+      position: relative;
+    }
+    #intro {
+      background: none;
+      box-shadow: none;
+      padding: 0;
+      margin: 0 auto;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       width: 100%;
-      max-width: 250px;
-      height: auto;
-      margin: 10px;
-      object-fit: cover;
-      border-radius: 10px;
-      display: inline-block;
-      vertical-align: middle;
+      max-width: 100%;
     }
-   #intro {
-  background: none;
-  box-shadow: none;
-  padding: 0;
-  margin: 0 auto;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  max-width: 100%;
-}
-
-#intro img {
+      #intro img {
   display: block;
   margin: 0 auto;
   width: 100vw; 
@@ -438,7 +420,15 @@ main {
       <a href="#gallery">Gallery</a>
       <a href="#feedback">Feedback</a>
     </div>
-    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+  <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    <div id="sidebar" class="sidebar">
+      <a href="#intro">Home</a>
+      <a href="#art">Settings</a>
+      <a href="#gallery">Contact</a>
+      <a href="#contact">About</a>
+    </div>
+
   </nav>
 
       <section class="card" id="intro">
