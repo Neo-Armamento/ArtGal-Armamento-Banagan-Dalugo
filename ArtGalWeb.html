@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,7 +6,11 @@
   <title>Aesthetic Responsive Art Page</title>
   <script defer src="Script.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     .background-container {
       background-position: center;
@@ -18,8 +22,6 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      margin: 0;
-      padding: 0;
     }
 
     .background-container::before {
@@ -49,12 +51,12 @@
       color: #333;
       position: relative;
     }
+
     body::before {
       content: "";
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.55);
+      inset: 0;
+      background: rgba(0,0,0,0.55);
       z-index: -1;
     }
 
@@ -69,7 +71,7 @@
       letter-spacing: 1px;
     }
 
-    .sidebar-toggle {
+    .sidebar-toggle-button {
       background: linear-gradient(90deg, #4f46e5, #3b82f6);
       color: white;
       font-size: 1.3rem;
@@ -82,17 +84,24 @@
       border: none;
     }
 
-    .sidebar-toggle:hover {
+    .sidebar-toggle-button:hover {
       background: linear-gradient(90deg, #3b82f6, #2563eb);
       transform: translateY(-2px);
     }
 
-.container {
-  width: 100vw; 
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-}
+    .sidebar-toggle {
+      background: none;
+      border: none;
+      color: rgb(245, 242, 56);
+      font-size: 24px;
+      cursor: pointer;
+      margin-right: 15px;
+    }
+
+    .container {
+      width: 100vw;
+      max-width: 100%;
+    }
 
     @media (min-width: 601px) {
       .container { flex-direction: row; }
@@ -100,15 +109,12 @@
       aside { flex: 1; }
     }
 
-main {
-  background: rgba(255,255,255,0.9);
-  padding: 40px; 
-  border-radius: 0;
-  box-shadow: none;
-  margin: 80px 0 40px 0; 
-  width: 100vw; 
-  max-width: 100%;
-}
+    main {
+      background: rgba(255,255,255,0.9);
+      padding: 40px;
+      margin: 80px auto 40px auto;
+      width: 100%;
+    }
 
     aside {
       display: none;
@@ -117,54 +123,22 @@ main {
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-
     aside.show { display: block; }
     @media (max-width: 600px) { aside { display: none !important; } }
-
+    
     .nav-bar {
-      display: flex;
-      justify-content: center;
       position: fixed;
       top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #e9ff22, #241fb2);
+      padding: 12px 24px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
       z-index: 1000;
-      gap: 15px;
-      background: linear-gradient(90deg, #1e3a8a, #facc15);
-      padding: 12px;
-      border-radius: 10px;
-      margin-bottom: 20px;
     }
-
-    .nav-bar {
-      position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     display: flex;
-     justify-content: space-between; 
-     align-items: center;
-     background: linear-gradient(90deg, #e9ff22, #241fb2);
-     padding: 12px 24px;
-     box-shadow: 0 3px 10px rgba(0,0,0,0.25);
-     z-index: 1000;
-    }
-
-    .nav-bar a {
-     color: white;
-     text-decoration: none;
-     font-weight: 600;
-     padding: 10px 16px;
-     border-radius: 8px;
-     background: linear-gradient(135deg, #4f46e5, #3b82f6);
-     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-     transition: all 0.25s ease;
-    }
-
-    .nav-bar a:hover {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-    }
-
 
     .nav-links {
       display: flex;
@@ -180,7 +154,7 @@ main {
       border-radius: 8px;
       background: linear-gradient(135deg, #4f46e5, #3b82f6);
       box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-      transition: all 0.25s ease;
+      transition: 0.25s ease;
     }
 
     .nav-links a:hover {
@@ -196,12 +170,25 @@ main {
       margin-bottom: 20px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }
-    h1, h2 { text-align: center; margin-bottom: 10px; color: #222; }
+
+    .card img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #222;
+    }
 
     .profile-container, .volleyball-container {
       text-align: center;
       margin: 15px 0;
     }
+
     .profile-container img,
     .volleyball-container img {
       width: 150px;
@@ -215,54 +202,71 @@ main {
     .responsive-gallery {
       display: flex;
       flex-wrap: wrap;
-      text-align: center;
       justify-content: center;
       gap: 15px;
     }
+
     .responsive-gallery img {
-      width: 100%;
-      max-width: 150px;  
+      width: 150px;
       height: auto;
-      margin: 10px; 
       border-radius: 12px;
       object-fit: cover;
       transition: transform 0.3s ease;
     }
-    .responsive-gallery img:hover { 
+
+    .responsive-gallery img:hover {
       transform: scale(1.05);
     }
+
     .art-item {
       display: flex;
-      align-items: flex-start;
-      margin-bottom: 20px;
       gap: 15px;
+      margin-bottom: 20px;
     }
+
     .art-item img {
-      width: 160px;
+      width: 120px;
+      height: auto;
+      object-fit: cover;
       border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
     }
+
     .art-description {
       flex: 1;
     }
-    
+
     form {
       background: #fafafa;
       padding: 15px;
       border-radius: 10px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.25);
     }
-    form label { display: block; margin-top: 10px; font-weight: bold; }
-    form input, form textarea, form select {
-      width: 100%; padding: 8px; margin-top: 5px;
-      border: 1px solid #ccc; border-radius: 5px;
+
+    form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
     }
+
+    form input,
+    form textarea,
+    form select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+
     form input[type="submit"] {
       margin-top: 12px;
       background: linear-gradient(90deg, #1e3a8a, #facc15);
-      color: white; border: none;
-      font-weight: bold; cursor: pointer;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
     }
+
     footer {
       background: rgba(51, 51, 51, 0.8);
       color: white;
@@ -270,67 +274,39 @@ main {
       padding: 0.7rem;
     }
 
-    #gallery {
-      margin-top: 20px;
-      background: rgba(255,255,255,0.95);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    }
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
       gap: 12px;
-      align-items: center;
     }
+
     .gallery-grid img {
       width: 100%;
       height: 100px;
       object-fit: cover;
       border-radius: 8px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transition: 0.25s ease;
       cursor: pointer;
     }
+
     .gallery-grid img:hover {
       transform: scale(1.05);
       box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
+
     img {
-      display: block;
-      margin: 0 auto;
       max-width: 100%;
       height: auto;
       object-fit: contain;
     }
+
     .image-container {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
-    .card img {
-      display: block;
-      margin: 0 auto;
-      width: 100%;
-      max-width: 1200px;
-      height: auto;
-      object-fit: contain;
-      border-radius: 10px;
-    }
-    .card {
-      background: none;
-      box-shadow: none; 
-      padding: 0;     
-      margin: 0 auto; 
-      border: none;     
-    }
-    .card img:not(#intro img) {
-      width: auto;
-      max-width: 100%;
-      height: auto;
-      object-fit: cover;
-      border-radius: 10px;
-    }
+
     #art img {
       width: 100%;
       max-width: 250px;
@@ -341,70 +317,58 @@ main {
       border-radius: 10px;
       vertical-align: middle;
     }
+
+    /* Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
-      left: -250px; 
+      left: -250px;
       width: 250px;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
-      overflow-x: hidden;
+      background: rgba(0,0,0,0.95);
       transition: 0.4s;
-      padding-top: 80px; 
+      padding-top: 80px;
       z-index: 1000;
       box-shadow: 2px 0 10px rgba(0,0,0,0.5);
     }
+
     .sidebar a {
       display: block;
+      padding: 15px 30px;
+      margin-bottom: 10px;
       color: white;
-      padding: 15px 30px; 
-      margin-bottom: 10px; 
       text-decoration: none;
       font-size: 18px;
       border-radius: 5px;
-      transition: background-color 0.3s, transform 0.2s;
+      transition: 0.3s;
     }
+
     .sidebar a:hover {
-      background-color: #444;
+      background: #444;
       transform: translateX(5px);
     }
-    .sidebar-toggle {
-      font-size: 24px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: white;
-      margin: 15px;
-      z-index: 1100;
-      position: relative;
-    }
+
     #intro {
-      background: none;
-      box-shadow: none;
-      padding: 0;
-      margin: 0 auto;
-      border: none;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       width: 100%;
-      max-width: 100%;
     }
-      #intro img {
-  display: block;
-  margin: 0 auto;
-  width: 100vw; 
-  height: 100vh;
-  object-fit: cover;
-  border-radius: 0; 
-}
 
-#intro .background-container {
-  display: none;
-}
+    #intro img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      display: block;
+    }
+
+    #intro .background-container {
+      display: none;
+    }
   </style>
 </head>
+  
 <body>
   <header>
     <h1>Unique Responsive Art Page</h1>
@@ -730,4 +694,5 @@ main {
   </script>
 </body>
 </html>
+
 
