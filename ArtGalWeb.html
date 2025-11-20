@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ArtHub Full Page with Login & Search</title>
+<title>ArtHub</title>
 <style>
   * { 
     margin:0; 
@@ -12,17 +12,24 @@
     font-family: Arial, sans-serif; 
   }
 
-  body { 
-    background: #f5f5f5; 
-    color: #333; 
-    transition:0.3s; 
+  body, p, span, li, input, button {
+    font-size: 18px;
+    text-align: justify;
   }
 
-  :root {
-    --primary-color: orange;
+  h1 { font-size: 36px; font-weight: bold; }
+  h2 { font-size: 30px; font-weight: bold; }
+  h3 { font-size: 26px; font-weight: bold; }
+
+  body {
+    background: linear-gradient(to bottom, #b3e5fc, #4fc3f7); /* pastel sky blue -> pastel dark blue */
+    min-height: 100vh;
+    color: #333;
+    transition: 0.3s;
   }
 
-  /* LOGIN PAGE */
+  :root { --primary-color: orange; }
+
   #loginPage {
     width:100%; 
     height:100vh; 
@@ -30,91 +37,56 @@
     flex-direction:column;
     justify-content:center; 
     align-items:center; 
-    background:#fff;
+    background: linear-gradient(to bottom, #b3e5fc, #4fc3f7);
+    color: #fff;
   }
-
-  #loginPage h1 { 
-    margin-bottom: 20px; 
-    color: var(--primary-color); 
-  }
-
-  #loginPage input, #loginPage select {
-    width: 300px; 
-    padding: 12px; 
-    margin: 8px 0; 
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-
-  #loginPage button {
-    width: 300px; 
-    padding: 12px; 
-    background: var(--primary-color); 
-    color:white;
-    border:none; 
-    border-radius:8px; 
-    cursor:pointer;
-  }
-
+  #loginPage h1 { margin-bottom:20px; color: var(--primary-color); }
+  #loginPage input, #loginPage select { width:300px; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ccc; }
+  #loginPage button { width:300px; padding:12px; background: var(--primary-color); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
   #loginMessage { margin-top:10px; font-weight:bold; }
 
-  /* MAIN CONTENT */
   #mainContent { display:none; padding:20px; }
 
-  header, footer { 
-    background: var(--primary-color); 
-    color:white; 
-    text-align:center; 
-    padding:15px; 
-    border-radius:8px; 
-  }
+  header, footer { background: var(--primary-color); color:white; text-align:center; padding:15px; border-radius:8px; }
 
   nav {
-    width:100%; 
-    background:#fff; 
-    padding:10px 20px;
-    display:flex; 
-    justify-content:space-between; 
-    align-items:center;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1); 
-    margin-bottom:20px;
+    width:100%; background:#fff; padding:10px 20px;
+    display:flex; justify-content:space-between; align-items:center;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:20px;
   }
+  nav a { margin-right:15px; text-decoration:none; color: var(--primary-color); font-weight:bold; }
 
-  nav a { 
-    margin-right:15px; 
-    text-decoration:none; 
-    color: var(--primary-color); 
-    font-weight:bold; 
+  .container {
+    width:100%; max-width:1200px; margin:0 auto; padding:20px;
+    display:flex; flex-direction:column; align-items:center; gap:20px;
   }
+  .container input[type="text"], .container button { width:100%; max-width:500px; }
 
-  .container { 
-    display:flex; 
-    flex-wrap:wrap; 
-    gap:15px; 
-    justify-content:center; 
-  }
-
-  .card {
-    background:white; 
-    border-radius:10px; 
+  /* Cards & Art Descriptions Gradient */
+  .card, .art-item .art-description {
+    background: linear-gradient(to bottom, #e1f5fe, #b3e5fc); /* pastel light blue */
+    border-radius:10px;
     padding:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1); 
-    width:250px; 
-    transition:0.2s;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    transition:0.3s;
     text-align:center;
   }
-
-  .card img { 
-    width:100%; 
-    border-radius:8px; 
-    margin-bottom:10px; 
-    cursor:pointer; 
-  }
-
+  .card img { width:100%; border-radius:8px; margin-bottom:10px; cursor:pointer; }
   .card:hover { transform:scale(1.03); }
 
+  #intro.card { width:100%; max-width:100%; margin:0 auto; }
+  #intro.card img { width:100%; max-height:100%; object-fit:cover; border-radius:10px; }
+  #intro.card p { text-align:justify; line-height:1.6; margin-top:10px; font-size:20px; }
+
+  .art-item { display:flex; align-items:flex-start; gap:20px; margin-bottom:30px; }
+  .art-item img { width:250px; height:250px; object-fit:cover; border-radius:10px; margin-right:15px; }
+  .art-item .art-description { flex:1; font-size:20px; line-height:1.6; }
   .art-description h3 { color: var(--primary-color); margin-bottom:5px; }
-  .art-description p { margin-bottom:8px; font-size:14px; line-height:1.4; }
+  .art-description p { margin-bottom:8px; }
+
+  button { font-size:18px; font-weight:600; padding:10px 18px; }
+
+  small, .small-text { font-size:16px; }
 
   form { display:flex; flex-direction:column; gap:10px; margin-top:10px; }
   form input, form textarea, form button { padding:10px; border-radius:6px; border:1px solid #ccc; }
@@ -122,75 +94,110 @@
 
   aside { background:white; padding:15px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); margin-top:20px; }
 
-  /* MODAL */
-  .modal { 
-    display: none; 
-    position: fixed; 
-    z-index: 1000; 
-    padding-top: 60px; 
-    left: 0; top: 0; 
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0,0,0,0.8);
-  }
+  .modal { display:none; position:fixed; z-index:1000; padding-top:60px; left:0; top:0; width:100%; height:100%; overflow:auto; background-color: rgba(0,0,0,0.8); }
+  .modal-content { margin:auto; display:block; max-width:80%; max-height:80%; border-radius:10px; }
+  .close { position:absolute; top:20px; right:35px; color:white; font-size:40px; font-weight:bold; cursor:pointer; }
 
-  .modal-content { margin: auto; display: block; max-width: 80%; max-height: 80%; border-radius: 10px; }
-  .close { position: absolute; top: 20px; right: 35px; color: white; font-size: 40px; font-weight: bold; cursor: pointer; }
-
-  /* API SEARCH RESULTS */
   #output {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap:15px;
+    width:100%;
+    margin-top:20px;
   }
+  #output .card { width:100%; max-width:350px; }
+  #output .card .title { font-weight:bold; margin-bottom:5px; color: var(--primary-color); }
+  #output .card button { margin-top:5px; padding:8px 12px; border:none; background: var(--primary-color); color:white; border-radius:6px; cursor:pointer; font-size:14px; transition:0.2s; }
+  #output .card button:hover { background:darkorange; }
 
-  #output .card {
-    width: 250px;
-    background: white;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: 0.2s;
-    text-align: center;
-  }
+  .responsive-gallery img { width:200px; height:200px; object-fit:cover; border-radius:10px; margin:5px; transition:0.3s; }
+  .responsive-gallery { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
 
-  #output .card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    cursor: pointer;
-  }
+  /* Likes / Dislikes / Comments */
+  .art-feedback { margin-top:15px; text-align:justify; }
+  .art-feedback .feedback-buttons { display:flex; gap:10px; margin-bottom:10px; }
+  .art-feedback .feedback-buttons button { padding:6px 12px; font-size:16px; border:none; border-radius:6px; cursor:pointer; background-color: var(--primary-color); color:white; transition:0.2s; }
+  .art-feedback .feedback-buttons button:hover { background-color:darkorange; }
 
-  #output .card .title {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: var(--primary-color);
-  }
+  .art-feedback .comments-section { display:flex; flex-direction:column; gap:5px; }
+  .art-feedback .comment-input { padding:6px 10px; border-radius:6px; border:1px solid #ccc; width:100%; max-width:400px; }
+  .art-feedback .add-comment-btn { padding:6px 12px; width:fit-content; border:none; border-radius:6px; cursor:pointer; background-color: var(--primary-color); color:white; transition:0.2s; }
+  .art-feedback .add-comment-btn:hover { background-color:darkorange; }
 
-  #output .card button {
-    margin-top: 5px;
-    padding: 8px 12px;
-    border: none;
-    background: var(--primary-color);
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: 0.2s;
-  }
+  /* Comments & Replies Gradient */
+  .comment-list > li { background: linear-gradient(to bottom, #e1f5fe, #b3e5fc); padding:8px 10px; border-radius:6px; margin-bottom:8px; max-width:fit-content; }
+  .reply-list li { background: linear-gradient(to bottom, #d0f0fd, #a0e0fb); padding:6px 10px; border-radius:6px; margin-bottom:5px; max-width:fit-content; margin-left:20px; }
 
-  #output .card button:hover {
-    background: darkorange;
+  .comment-container, .reply-container {
+    display:block; max-width:80%; word-wrap:break-word; border-radius:8px; padding:10px; margin-bottom:8px;
   }
+  .reply-container { background:#e0e0e0; margin-left:20px; }
+  .reply-btn { margin-top:5px; font-size:12px; padding:2px 6px; cursor:pointer; background:transparent; border:none; color: var(--primary-color); }
+  .reply-btn:hover { text-decoration:underline; }
+  .reply-input-container { margin-top:5px; display:flex; gap:5px; }
+  .reply-input-container input { flex:1; padding:6px 10px; border-radius:6px; border:1px solid #ccc; }
+  .reply-input-container button { padding:6px 10px; border-radius:6px; border:none; background-color: var(--primary-color); color:white; cursor:pointer; }
+
+.post-art-section {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+  background: linear-gradient(to bottom, #e1f5fe, #b3e5fc);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.post-art-section input, .post-art-section textarea, .post-art-section button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  border:1px solid #ccc;
+}
+
+.post-art-section button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.post-art-section button:hover {
+  background-color: darkorange;
+}
+
+.types-of-art .art-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+  background: linear-gradient(to bottom, #e1f5fe, #b3e5fc);
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.types-of-art .art-item img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.types-of-art .art-description {
+  flex: 1;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
 </style>
+
 </head>
 <body>
 
-<!-- LOGIN PAGE -->
 <div id="loginPage">
   <h1>Welcome to ArtHub</h1>
   <select id="role">
@@ -204,30 +211,426 @@
   <div id="loginMessage"></div>
 </div>
 
-<!-- MAIN CONTENT -->
 <div id="mainContent">
   <header>
     <h2>ArtHub: Creative Space</h2>
   </header>
 
-  <nav class="nav-bar">
-    <div>
-      <a href="#intro">Home</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
+ <nav class="nav-bar">
+  <div>
+    <a href="#intro">Home</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button id="toggleApiSearch" style="padding:8px 12px; background:var(--primary-color); color:white; border:none; border-radius:6px; cursor:pointer;">
+    Search Paint
+  </button>
+</nav>
 
-  <div class="container">
-    <input type="text" id="searchInput" placeholder="Search artworks...">
-    <button id="btn">Search</button>
-    <div id="output"></div>
+<div id="apiSearchContainer" style="display:none; margin-top:20px;">
+  <input type="text" id="searchInput" placeholder="Search artworks..." style="padding:6px 10px; border-radius:6px; border:1px solid #ccc; width:300px;">
+  <button id="btn" style="padding:6px 10px; background:var(--primary-color); color:white; border:none; border-radius:6px; cursor:pointer;">Search</button>
+  <div id="output"></div>
+</div>
+
+      <section class="card" id="intro">
+        <h2>ArtHUB</h2>
+  <img src="assets/Star.jpg" alt="Starry Night">
+ <div class="background-container">
+  <div class="overlay-content">
+  </div>
+</div>
+
+        <p>
+          <strong>Maligayang pagdating sa aming Pahina!</strong><br><br>
+          Ang aming layunin ay lumikha ng isang bukas at makulay na espasyo para sa lahat ng mahilig sa sining.  
+          Dito sa <strong>ArtHUB</strong>, hinihikayat namin ang bawat isa na magpahayag ng kanilang sarili sa pamamagitan ng sining—mula sa pagguhit, pagpipinta, digital art, hanggang sa iba’t ibang malikhaing anyo.  
+        </p>
+        <p>
+          Inaanyayahan namin ang lahat ng artists, baguhan man o propesyonal, na maging bahagi ng aming komunidad.  
+          Sa pamamagitan ng pagtutulungan at pagbabahagi ng talento, sama-sama nating bubuo ng isang pamayanang nag-uudyok ng inspirasyon, pagkatuto, at pagkakaibigan.
+        </p>
+        <p>
+          Sumali na at maging kabahagi ng isang komunidad na tunay na nagpapahalaga sa sining at malikhaing pagpapahayag.
+        </p>
+        <div class="volleyball-container">
+         
+        </div>
+      </section>
+
+      <section class="card" id="blog">
+        <h1>Selling, Commissions, and Bidding</h1>
+        <p><strong>ArtHUB</strong> · <time datetime="2025-08-27">CREATE YOUR WORLD!</time></p>
+
+        <p>
+          In today’s creative world, artists have many opportunities to share their work beyond simple exhibitions.  
+          Selling artworks allows creators to earn directly from their passion, whether through physical galleries or online platforms.  
+          By offering their creations for sale, artists not only gain income but also connect with people who truly appreciate their work.  
+        </p>
+
+        <p>
+          Commissions open another exciting door for artists.  
+          Clients can request personalized pieces that capture unique ideas, stories, or emotions.  
+          Accepting commissions gives artists the chance to grow, adapt to different challenges, and expand their portfolio with meaningful projects.  
+        </p>
+
+        <p>
+          Art bidding, on the other hand, provides a dynamic way of valuing creativity.  
+          Through auctions, artworks can find their highest worth as collectors and art lovers place bids.  
+          This not only rewards the artist but also highlights the true demand and appreciation for their craft.  
+        </p>
+
+        <p>
+          Whether selling, accepting commissions, or participating in art bidding, each step helps artists build sustainable careers and strengthen the community of creatives who inspire one another.  
+        </p>
+
+        <div class="responsive-gallery">
+          <img src="assets/Ian (Cat Incident).jpg" alt="Art Sale Example">
+          <img src="assets/Beauty.jpg" alt="Commission Example">
+          <img src="assets/Portrait.jpg" alt="Bidding Example">
+
+          <div class="post-art-section">
+  <h2>Post Your Artwork</h2>
+  <form id="postArtForm">
+    <input type="text" id="artTitle" placeholder="Title of Artwork" required>
+    <input type="file" id="artImage" accept="image/*" required>
+    <textarea id="artDescription" placeholder="Description (optional)"></textarea>
+    <button type="submit">Post</button>
+  </form>
+</div>
+
+                <section class="card" id="art">
+        <h2>Types of Art</h2>
+
+        <div class="art-item">
+          <img src="assets/Charcoal.jpg" alt="Charcoal Drawing" />
+          <div class="art-description">
+            <h3>Charcoal Drawing</h3>
+            <p>Charcoal drawing is one of the most expressive and versatile forms of art. It allows artists to create deep shadows, bold lines, and soft shading with ease. By using different types of charcoal such as vine or compressed sticks, you can experiment with textures and tones that bring a drawing to life.</p>
+            <p>To start, lightly sketch your outline with a pencil before applying charcoal. Smudging with fingers or blending stumps helps in achieving gradients and realistic effects. Erasers also play a vital role in creating highlights and refining details within the piece.</p>
+            <p>Mastering charcoal requires patience and control, but it is an excellent medium for capturing emotions, portraits, and dramatic compositions. It is often chosen by beginners and professionals alike for its ability to produce striking contrasts and quick results.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
   </div>
 
-  <section class="card" id="intro">
-    <h2>ArtHUB</h2>
-    <img src="assets/Star.jpg" alt="Starry Night">
-    <p>Welcome to our ArtHub! Explore artworks and discover artists.</p>
-  </section>
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Color.jpg" alt="Color Pencil Drawing" />
+          <div class="art-description">
+            <h3>Color Pencil Drawing</h3>
+            <p>Color pencil art is widely appreciated for its vibrant tones and precision. With layering techniques, artists can achieve realistic shading, smooth gradients, and detailed textures. High-quality colored pencils allow for richer pigmentation and blending.</p>
+            <p>To begin, start with light layers of color and gradually build them up. Pressing harder with the pencil produces darker tones, while lighter strokes add subtlety. Blending tools or even tissue paper can be used to merge colors seamlessly.</p>
+            <p>This medium is ideal for beginners because it is clean, portable, and easy to control. Whether used for portraits, landscapes, or imaginative works, colored pencils offer endless possibilities for creative expression.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Oil Painting.jpg" alt="Painting Example" />
+          <div class="art-description">
+            <h3>Painting (Oil / Acrylic / Watercolor)</h3>
+            <p>Painting is one of the oldest and most dynamic forms of art, ranging from classical oil paintings to modern acrylics and watercolors. Each medium offers unique qualities—oils provide depth and blending time, acrylics dry quickly and allow layering, while watercolors create soft and translucent effects.</p>
+            <p>The process usually begins with preparing a canvas or paper and sketching a light outline. Artists then apply layers of paint using brushes, palette knives, or even unconventional tools to achieve their desired textures and styles.</p>
+            <p>Painting encourages experimentation and creativity, making it an essential practice for both beginners and experienced artists. It is a timeless way to express ideas, emotions, and beauty through vibrant colors and brushstrokes.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Graphite.jpg" alt="Graphite Drawing" />
+          <div class="art-description">
+            <h3>Graphite Drawing</h3>
+            <p>Graphite drawing is a classic and widely practiced art form, often associated with sketching and detailed studies. It is flexible, allowing artists to create fine lines, soft shading, and intricate textures using pencils of varying hardness.</p>
+            <p>To start, select the right grade of graphite pencil—softer pencils (B) are darker and great for shading, while harder pencils (H) are lighter and useful for fine details. Blending stumps or tissues help smooth out the shading for realistic effects.</p>
+            <p>This medium is beginner-friendly yet sophisticated enough for advanced artworks. Graphite drawing is perfect for practice, learning proportions, and developing precision, making it a foundation for many aspiring artists.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Pointillism.jpg" alt="Pointillism" />
+          <div class="art-description">
+            <h3>Pointillism</h3>
+            <p>Pointillism is a painting technique that uses tiny dots of color placed closely together to form an image. When viewed from a distance, the dots blend visually to create vibrant scenes.</p>
+            <p>This technique, pioneered by Georges Seurat, emphasizes precision and patience. Artists use small brushstrokes or pen points to build texture, color depth, and light.</p>
+            <p>It is a rewarding style that teaches patience and a deeper understanding of color theory and optical mixing.</p>
+<<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Impressionism.jpg" alt="Impressionism" />
+          <div class="art-description">
+            <h3>Impressionism</h3>
+            <p>Impressionism focuses on capturing the fleeting effects of light and color in a scene rather than precise detail. Artists use loose brushwork and vibrant palettes.</p>
+            <p>It emerged in 19th-century France and revolutionized art by emphasizing mood and atmosphere over realism.</p>
+            <p>This style is perfect for experimenting with lighting, seasons, and spontaneous outdoor painting.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Abstract.jpg" alt="Abstract Art" />
+          <div class="art-description">
+            <h3>Abstract Art</h3>
+            <p>Abstract art breaks away from realistic representation and uses shapes, colors, and forms to express emotions or ideas.</p>
+            <p>It allows complete creative freedom and encourages viewers to interpret the artwork in their own way.</p>
+            <p>This style is ideal for exploring pure expression and emotion without the constraints of realism.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Cubism.jpg" alt="Cubism" />
+          <div class="art-description">
+            <h3>Cubism</h3>
+            <p>Cubism deconstructs subjects into geometric shapes and reassembles them in abstract compositions.</p>
+            <p>Founded by Pablo Picasso and Georges Braque, it emphasizes multiple perspectives in one artwork.</p>
+            <p>This approach challenges traditional viewpoints and inspires innovative thinking.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Surrealism.jpg" alt="Surrealism" />
+          <div class="art-description">
+            <h3>Surrealism</h3>
+            <p>Surrealism blends dreamlike imagery with reality, often producing strange or fantastical scenes.</p>
+            <p>Inspired by the subconscious, it allows artists to express thoughts beyond rational understanding.</p>
+            <p>It’s ideal for storytelling and imaginative concept exploration.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Digital.jpg" alt="Digital Art" />
+          <div class="art-description">
+            <h3>Digital Art</h3>
+            <p>Digital art uses software and digital tools to create illustrations, paintings, and designs.</p>
+            <p>It offers limitless possibilities for editing, layering, and experimentation.</p>
+            <p>Perfect for modern artists exploring animation, concept art, and visual media.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/SkullUntitled.jpg" alt="Mixed Media" />
+          <div class="art-description">
+            <h3>Mixed Media</h3>
+            <p>Mixed media combines multiple art forms, such as painting, collage, and drawing, into one piece.</p>
+            <p>It allows for creative freedom and texture exploration, often producing unique results.</p>
+            <p>This style encourages experimentation with unconventional materials.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Graffiti.jpg" alt="Graffiti Art" />
+          <div class="art-description">
+            <h3>Graffiti Art</h3>
+            <p>Graffiti art transforms public spaces into vibrant canvases using spray paint and bold designs.</p>
+            <p>It often carries social or political messages and emphasizes self-expression.</p>
+            <p>This style blends art with activism and community engagement.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Collage.jpg" alt="Collage Art" />
+          <div class="art-description">
+            <h3>Collage Art</h3>
+            <p>Collage art involves assembling different materials like paper, photos, and fabric into a single artwork.</p>
+            <p>It creates new narratives by combining diverse elements into cohesive compositions.</p>
+            <p>This style encourages recycling materials into meaningful stories.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Line Art.jpg" alt="Line Art" />
+          <div class="art-description">
+            <h3>Line Art</h3>
+            <p>Line art uses simple lines without shading or color to define form and structure.</p>
+            <p>It highlights composition, proportion, and movement in its purest form.</p>
+            <p>This minimalist style is excellent for developing drawing fundamentals.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="art-item">
+          <img src="assets/Pop Art.jpg" alt="Pop Art" />
+          <div class="art-description">
+            <h3>Pop Art</h3>
+            <p>Pop Art celebrates popular culture with bold colors and imagery from advertising, comics, and media.</p>
+            <p>It challenges traditional fine art by blending high and low culture.</p>
+            <p>This playful style is eye-catching and impactful.</p>
+<div class="art-feedback">
+  <div class="feedback-buttons">
+    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+  </div>
+
+  <div class="comments-section">
+    <input type="text" placeholder="Add a comment..." class="comment-input" />
+    <button class="add-comment-btn">Post</button>
+    <div class="comment-list"></div>
+  </div>
+</div>
+          </div>
+        </div>
+      </section>
 
   <div class="container" id="contact">
     <aside>
@@ -246,14 +649,12 @@
   </footer>
 </div>
 
-<!-- IMAGE MODAL -->
 <div id="imgModal" class="modal">
   <span class="close">&times;</span>
   <img class="modal-content" id="modalImg">
 </div>
 
 <script>
-  // ---------------- LOGIN FUNCTION ----------------
   function login() {
     const role = document.getElementById("role").value;
     const username = document.getElementById("username").value.trim();
@@ -278,59 +679,156 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector(".nav-bar").style.display = "none";
+document.addEventListener("DOMContentLoaded", () => {
+  // ...your existing login, modal, comments, likes/dislikes, post art logic...
 
-    // Smooth scrolling
-    document.querySelectorAll(".nav-bar a[href^='#']").forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute("href"));
-        if(target) target.scrollIntoView({ behavior:"smooth" });
+  // Toggle API search container
+  const toggleBtn = document.getElementById("toggleApiSearch");
+  const apiContainer = document.getElementById("apiSearchContainer");
+
+  toggleBtn.addEventListener("click", () => {
+    if(apiContainer.style.display === "none"){
+      apiContainer.style.display = "block";
+    } else {
+      apiContainer.style.display = "none";
+    }
+  });
+
+  // API search functionality
+  document.getElementById("btn").addEventListener("click", async () => {
+    const query = document.getElementById("searchInput").value.trim();
+    const output = document.getElementById("output");
+    if(!query){ output.innerHTML="<p>Please enter a search term</p>"; return; }
+    output.innerHTML="<p>Loading...</p>";
+    try {
+      const res = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(query)}&limit=20&fields=id,title,image_id,artist_title,api_link`);
+      const data = await res.json();
+      if(!data.data || data.data.length===0){ output.innerHTML="<p>No paintings found</p>"; return; }
+      output.innerHTML="";
+      data.data.forEach(artwork => {
+        const imgUrl = artwork.image_id ? `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg` : '';
+        const title = artwork.title || 'Untitled';
+        const artist = artwork.artist_title || 'Unknown Artist';
+        const moreLink = artwork.api_link || '#';
+        output.innerHTML += `
+          <div class="card">
+            <img src="${imgUrl}" alt="${title}">
+            <div class="title">${title}</div>
+            <div>By: ${artist}</div>
+            <button onclick="window.open('${moreLink}', '_blank')">More Info</button>
+          </div>`;
       });
-    });
+    } catch(err){
+      output.innerHTML="<p>❌ Failed to load data</p>";
+      console.error(err);
+    }
+  });
 
-    // Image modal
-    const images = document.querySelectorAll('.card img');
-    const modal = document.getElementById('imgModal');
-    const modalImg = document.getElementById('modalImg');
-    const closeBtn = modal.querySelector('.close');
-    images.forEach(img => {
-      img.onclick = () => { modal.style.display = 'block'; modalImg.src = img.src; }
-    });
-    closeBtn.onclick = () => modal.style.display = 'none';
-    modal.onclick = e => { if(e.target===modal) modal.style.display='none'; }
+});
 
-    // Search API
-    document.getElementById("btn").addEventListener("click", async () => {
-      const query = document.getElementById("searchInput").value.trim();
-      const output = document.getElementById("output");
-      if(!query){ output.innerHTML="<p>Please enter a search term</p>"; return; }
-      output.innerHTML="<p>Loading...</p>";
-      try {
-        const res = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(query)}&limit=20&fields=id,title,image_id,artist_title,api_link`);
-        const data = await res.json();
-        if(!data.data || data.data.length===0){ output.innerHTML="<p>No paintings found</p>"; return; }
-        output.innerHTML="";
-        data.data.forEach(artwork => {
-          const imgUrl = artwork.image_id ? `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg` : '';
-          const title = artwork.title || 'Untitled';
-          const artist = artwork.artist_title || 'Unknown Artist';
-          const moreLink = artwork.api_link || '#';
-          output.innerHTML += `
-            <div class="card">
-              <img src="${imgUrl}" alt="${title}">
-              <div class="title">${title}</div>
-              <div>By: ${artist}</div>
-              <button onclick="window.open('${moreLink}', '_blank')">More Info</button>
-            </div>`;
-        });
-      } catch(err){
-        output.innerHTML="<p>❌ Failed to load data</p>";
-        console.error(err);
+  // Likes / Dislikes
+document.querySelectorAll(".like-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const count = btn.querySelector(".like-count");
+    count.textContent = parseInt(count.textContent) + 1;
+  });
+});
+
+document.querySelectorAll(".dislike-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const count = btn.querySelector(".dislike-count");
+    count.textContent = parseInt(count.textContent) + 1;
+  });
+});
+
+document.addEventListener("click", function(e){
+  // Add comment
+  if(e.target.classList.contains("add-comment-btn")){
+    const section = e.target.closest(".comments-section");
+    const input = section.querySelector(".comment-input");
+    const list = section.querySelector(".comment-list");
+
+    if(input.value.trim() !== ""){
+      const li = document.createElement("li");
+      li.classList.add("comment-container");
+      li.innerHTML = `
+        <span>${input.value}</span>
+        <button class="reply-btn">Reply</button>
+        <ul class="reply-list"></ul>
+      `;
+      list.appendChild(li);  // always at bottom
+      input.value = "";
+    }
+  }
+
+  // Add reply
+  if(e.target.classList.contains("reply-btn")){
+    const li = e.target.closest("li");
+    const replyList = li.querySelector(".reply-list");
+
+    // prevent multiple inputs
+    if(replyList.querySelector("input")) return;
+
+    const container = document.createElement("div");
+    container.classList.add("reply-input-container");
+    container.innerHTML = `
+      <input type="text" placeholder="Reply...">
+      <button class="post-reply-btn">Post Reply</button>
+    `;
+    replyList.appendChild(container);
+
+    container.querySelector(".post-reply-btn").addEventListener("click", () => {
+      const replyInput = container.querySelector("input");
+      if(replyInput.value.trim() !== ""){
+        const replyLi = document.createElement("li");
+        replyLi.classList.add("reply-container");
+        replyLi.innerHTML = `
+          <span>${replyInput.value}</span>
+          <button class="reply-btn">Reply</button>
+          <ul class="reply-list"></ul>
+        `;
+        replyList.appendChild(replyLi); // added at bottom
+        container.remove();
       }
     });
-  });
+  }
+});
+
+document.getElementById("postArtForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const title = document.getElementById("artTitle").value.trim();
+  const description = document.getElementById("artDescription").value.trim();
+  const imageFile = document.getElementById("artImage").files[0];
+
+  if(!imageFile) return;
+
+  const reader = new FileReader();
+  reader.onload = function(event){
+    const imgURL = event.target.result;
+
+    // Create art-item
+    const artItem = document.createElement("div");
+    artItem.classList.add("art-item");
+
+    artItem.innerHTML = `
+      <img src="${imgURL}" alt="${title}">
+      <div class="art-description">
+        <h3>${title}</h3>
+        <p>${description}</p>
+      </div>
+    `;
+
+    // Append to Types of Art
+    document.getElementById("typesOfArt").appendChild(artItem);
+
+    // Reset form
+    document.getElementById("postArtForm").reset();
+  }
+
+  reader.readAsDataURL(imageFile);
+});
+
 </script>
 
 </body>
