@@ -22,7 +22,7 @@
   h3 { font-size: 26px; font-weight: bold; }
 
   body {
-    background: linear-gradient(to bottom, #b3e5fc, #4fc3f7); /* pastel sky blue -> pastel dark blue */
+    background: linear-gradient(to bottom, #b3e5fc, #4fc3f7);
     min-height: 100vh;
     color: #333;
     transition: 0.3s;
@@ -62,9 +62,8 @@
   }
   .container input[type="text"], .container button { width:100%; max-width:500px; }
 
-  /* Cards & Art Descriptions Gradient */
   .card, .art-item .art-description {
-    background: linear-gradient(to bottom, #e1f5fe, #b3e5fc); /* pastel light blue */
+    background: linear-gradient(to bottom, #e1f5fe, #b3e5fc);
     border-radius:10px;
     padding:15px;
     box-shadow:0 2px 8px rgba(0,0,0,0.1);
@@ -113,7 +112,6 @@
   .responsive-gallery img { width:200px; height:200px; object-fit:cover; border-radius:10px; margin:5px; transition:0.3s; }
   .responsive-gallery { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
 
-  /* Likes / Dislikes / Comments */
   .art-feedback { margin-top:15px; text-align:justify; }
   .art-feedback .feedback-buttons { display:flex; gap:10px; margin-bottom:10px; }
   .art-feedback .feedback-buttons button { padding:6px 12px; font-size:16px; border:none; border-radius:6px; cursor:pointer; background-color: var(--primary-color); color:white; transition:0.2s; }
@@ -124,7 +122,6 @@
   .art-feedback .add-comment-btn { padding:6px 12px; width:fit-content; border:none; border-radius:6px; cursor:pointer; background-color: var(--primary-color); color:white; transition:0.2s; }
   .art-feedback .add-comment-btn:hover { background-color:darkorange; }
 
-  /* Comments & Replies Gradient */
   .comment-list > li { background: linear-gradient(to bottom, #e1f5fe, #b3e5fc); padding:8px 10px; border-radius:6px; margin-bottom:8px; max-width:fit-content; }
   .reply-list li { background: linear-gradient(to bottom, #d0f0fd, #a0e0fb); padding:6px 10px; border-radius:6px; margin-bottom:5px; max-width:fit-content; margin-left:20px; }
 
@@ -193,6 +190,38 @@
   line-height: 1.5;
 }
 
+#contact {
+  display: flex;
+  justify-content: center;
+}
+
+#contact aside {
+  width: 100%;
+  max-width: 600px;
+  background: #f8f8f8;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#contact form input,
+#contact form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#contact button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
 </style>
 
 </head>
@@ -219,6 +248,8 @@
  <nav class="nav-bar">
   <div>
     <a href="#intro">Home</a>
+    <a href="#blog">Commissions</a>
+    <a href="#art">Arts</a>
     <a href="#contact">Contact</a>
   </div>
   <button id="toggleApiSearch" style="padding:8px 12px; background:var(--primary-color); color:white; border:none; border-radius:6px; cursor:pointer;">
@@ -290,7 +321,8 @@
 
           <div class="post-art-section">
   <h2>Post Your Artwork</h2>
-  <form id="postArtForm">
+  <form action="submit.php" method="POST" enctype="multipart/form-data">
+    
     <input type="text" id="artTitle" placeholder="Title of Artwork" required>
     <input type="file" id="artImage" accept="image/*" required>
     <textarea id="artDescription" placeholder="Description (optional)"></textarea>
@@ -308,18 +340,18 @@
             <p>Charcoal drawing is one of the most expressive and versatile forms of art. It allows artists to create deep shadows, bold lines, and soft shading with ease. By using different types of charcoal such as vine or compressed sticks, you can experiment with textures and tones that bring a drawing to life.</p>
             <p>To start, lightly sketch your outline with a pencil before applying charcoal. Smudging with fingers or blending stumps helps in achieving gradients and realistic effects. Erasers also play a vital role in creating highlights and refining details within the piece.</p>
             <p>Mastering charcoal requires patience and control, but it is an excellent medium for capturing emotions, portraits, and dramatic compositions. It is often chosen by beginners and professionals alike for its ability to produce striking contrasts and quick results.</p>
-<div class="art-feedback">
-  <div class="feedback-buttons">
-    <button class="like-btn">👍 Like <span class="like-count">0</span></button>
-    <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
-  </div>
+        <div class="art-feedback">
+          <div class="feedback-buttons">
+            <button class="like-btn">👍 Like <span class="like-count">0</span></button>
+            <button class="dislike-btn">👎 Dislike <span class="dislike-count">0</span></button>
+          </div>
 
-  <div class="comments-section">
-    <input type="text" placeholder="Add a comment..." class="comment-input" />
-    <button class="add-comment-btn">Post</button>
-    <div class="comment-list"></div>
-  </div>
-</div>
+          <div class="comments-section">
+          <input type="text" placeholder="Add a comment..." class="comment-input" />
+            <button class="add-comment-btn">Post</button>
+              <div class="comment-list"></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -635,7 +667,8 @@
   <div class="container" id="contact">
     <aside>
       <h3>Contact / Message Form</h3>
-      <form>
+      <form action="submit.php" method="POST">
+
         <input type="text" placeholder="Full Name" required>
         <input type="email" placeholder="Email" required>
         <textarea rows="4" placeholder="Your message..." required></textarea>
@@ -680,9 +713,7 @@
   }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // ...your existing login, modal, comments, likes/dislikes, post art logic...
 
-  // Toggle API search container
   const toggleBtn = document.getElementById("toggleApiSearch");
   const apiContainer = document.getElementById("apiSearchContainer");
 
@@ -694,7 +725,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // API search functionality
   document.getElementById("btn").addEventListener("click", async () => {
     const query = document.getElementById("searchInput").value.trim();
     const output = document.getElementById("output");
@@ -726,7 +756,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-  // Likes / Dislikes
 document.querySelectorAll(".like-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const count = btn.querySelector(".like-count");
@@ -756,17 +785,15 @@ document.addEventListener("click", function(e){
         <button class="reply-btn">Reply</button>
         <ul class="reply-list"></ul>
       `;
-      list.appendChild(li);  // always at bottom
+      list.appendChild(li);
       input.value = "";
     }
   }
 
-  // Add reply
   if(e.target.classList.contains("reply-btn")){
     const li = e.target.closest("li");
     const replyList = li.querySelector(".reply-list");
 
-    // prevent multiple inputs
     if(replyList.querySelector("input")) return;
 
     const container = document.createElement("div");
@@ -787,7 +814,7 @@ document.addEventListener("click", function(e){
           <button class="reply-btn">Reply</button>
           <ul class="reply-list"></ul>
         `;
-        replyList.appendChild(replyLi); // added at bottom
+        replyList.appendChild(replyLi);
         container.remove();
       }
     });
@@ -807,7 +834,6 @@ document.getElementById("postArtForm").addEventListener("submit", function(e){
   reader.onload = function(event){
     const imgURL = event.target.result;
 
-    // Create art-item
     const artItem = document.createElement("div");
     artItem.classList.add("art-item");
 
@@ -819,10 +845,8 @@ document.getElementById("postArtForm").addEventListener("submit", function(e){
       </div>
     `;
 
-    // Append to Types of Art
     document.getElementById("typesOfArt").appendChild(artItem);
 
-    // Reset form
     document.getElementById("postArtForm").reset();
   }
 
