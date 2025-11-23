@@ -22,7 +22,7 @@
   h3 { font-size: 26px; font-weight: bold; }
 
   body {
-    background: linear-gradient(to bottom, #b3e5fc, #4fc3f7);
+    background: linear-gradient(to bottom, #b3e5fc, #4fc3f7); /* pastel sky blue -> pastel dark blue */
     min-height: 100vh;
     color: #333;
     transition: 0.3s;
@@ -62,8 +62,9 @@
   }
   .container input[type="text"], .container button { width:100%; max-width:500px; }
 
+  /* Cards & Art Descriptions Gradient */
   .card, .art-item .art-description {
-    background: linear-gradient(to bottom, #e1f5fe, #b3e5fc);
+    background: linear-gradient(to bottom, #e1f5fe, #b3e5fc); /* pastel light blue */
     border-radius:10px;
     padding:15px;
     box-shadow:0 2px 8px rgba(0,0,0,0.1);
@@ -112,6 +113,7 @@
   .responsive-gallery img { width:200px; height:200px; object-fit:cover; border-radius:10px; margin:5px; transition:0.3s; }
   .responsive-gallery { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
 
+  /* Likes / Dislikes / Comments */
   .art-feedback { margin-top:15px; text-align:justify; }
   .art-feedback .feedback-buttons { display:flex; gap:10px; margin-bottom:10px; }
   .art-feedback .feedback-buttons button { padding:6px 12px; font-size:16px; border:none; border-radius:6px; cursor:pointer; background-color: var(--primary-color); color:white; transition:0.2s; }
@@ -122,6 +124,7 @@
   .art-feedback .add-comment-btn { padding:6px 12px; width:fit-content; border:none; border-radius:6px; cursor:pointer; background-color: var(--primary-color); color:white; transition:0.2s; }
   .art-feedback .add-comment-btn:hover { background-color:darkorange; }
 
+  /* Comments & Replies Gradient */
   .comment-list > li { background: linear-gradient(to bottom, #e1f5fe, #b3e5fc); padding:8px 10px; border-radius:6px; margin-bottom:8px; max-width:fit-content; }
   .reply-list li { background: linear-gradient(to bottom, #d0f0fd, #a0e0fb); padding:6px 10px; border-radius:6px; margin-bottom:5px; max-width:fit-content; margin-left:20px; }
 
@@ -252,6 +255,13 @@
     <a href="#art">Arts</a>
     <a href="#contact">Contact</a>
   </div>
+ <button id="showArtistsBtn">Show Artists</button>
+
+  <div id="artistOverlay" style="display:none;">
+    <ul id="randomNames"></ul>
+  </div>
+
+<div id="artistInfo" style="margin-top:15px; border:1px solid #ccc; padding:10px; max-width:300px;"></div>
   <button id="toggleApiSearch" style="padding:8px 12px; background:var(--primary-color); color:white; border:none; border-radius:6px; cursor:pointer;">
     Search Paint
   </button>
@@ -713,7 +723,9 @@
   }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // ...your existing login, modal, comments, likes/dislikes, post art logic...
 
+  // Toggle API search container
   const toggleBtn = document.getElementById("toggleApiSearch");
   const apiContainer = document.getElementById("apiSearchContainer");
 
@@ -725,6 +737,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // API search functionality
   document.getElementById("btn").addEventListener("click", async () => {
     const query = document.getElementById("searchInput").value.trim();
     const output = document.getElementById("output");
@@ -756,6 +769,165 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+document.getElementById("showArtistsBtn").addEventListener("click", function () {
+  const overlay = document.getElementById("artistOverlay");
+  const list = document.getElementById("randomNames");
+  overlay.style.display = overlay.style.display === "none" ? "block" : "none";
+  list.innerHTML = ""; // clear
+
+  artists.forEach(artist => {
+    const li = document.createElement("li");
+    li.textContent = artist.name;
+    li.style.cursor = "pointer";
+    li.style.padding = "5px";
+
+    li.addEventListener("click", function () {
+      showArtistInfo(artist);
+    });
+
+    list.appendChild(li);
+  });
+});
+
+const artists = [
+  {
+    name: "Nepthali",
+    age: 22,
+    address: "123 Main St",
+    fb: "facebook.com/aaliyahArt",
+    email: "aaliyah@example.com",
+    image: "assets/artists/aaliyah.jpg"
+  },
+  {
+    name: "Den Art",
+    age: 28,
+    address: "456 Art Lane",
+    fb: "facebook.com/brentSketch",
+    email: "brent@example.com",
+    image: "assets/artists/brent.jpg"
+  },
+  {
+    name: "myco Lava",
+    age: 25,
+    address: "789 Studio Blvd",
+    fb: "facebook.com/chloePaints",
+    email: "chloe@example.com",
+    image: "assets/artists/chloe.jpg"
+  },
+  // --- Additional Artists ---
+  {
+    name: "guhiit Rhenz",
+    age: 30,
+    address: "101 Pixel Ave",
+    fb: "facebook.com/danielDigital",
+    email: "daniel@example.com",
+    image: "assets/artists/daniel.jpg"
+  },
+  {
+    name: "Thirdy Arts",
+    age: 27,
+    address: "202 Brush St",
+    fb: "facebook.com/ellaBrushWork",
+    email: "ella@example.com",
+    image: "assets/artists/ella.jpg"
+  },
+  {
+    name: "Vermont",
+    age: 24,
+    address: "303 Sketchway",
+    fb: "facebook.com/felixCreatives",
+    email: "felix@example.com",
+    image: "assets/artists/felix.jpg"
+  },
+  {
+    name: "joan",
+    age: 26,
+    address: "404 Gallery Blvd",
+    fb: "facebook.com/giannaArt",
+    email: "gianna@example.com",
+    image: "assets/artists/gianna.jpg"
+  },
+  {
+    name: "Jerome Berredo",
+    age: 29,
+    address: "505 Canvas Road",
+    fb: "facebook.com/hugoArts",
+    email: "hugo@example.com",
+    image: "assets/artists/hugo.jpg"
+  },
+  {
+    name: "Chaboy Dela Cruz",
+    age: 23,
+    address: "606 Creative Park",
+    fb: "facebook.com/isabellaDesigns",
+    email: "isabella@example.com",
+    image: "assets/artists/isabella.jpg"
+  },
+  {
+    name: "Ser Je Art",
+    age: 31,
+    address: "707 Portrait Lane",
+    fb: "facebook.com/jasperPortraits",
+    email: "jasper@example.com",
+    image: "assets/artists/jasper.jpg"
+  }
+];
+
+showBtn.addEventListener("click", () => {
+  // Toggle overlay visibility
+  overlay.style.display = overlay.style.display === "block" ? "none" : "block";
+  if(overlay.style.display === "block") showRandomNames();
+});
+
+function showRandomNames() {
+  randomNamesContainer.innerHTML = "";
+  const random15 = artists.sort(() => 0.5 - Math.random()).slice(0, 15);
+
+  random15.forEach(artist => {
+    const li = document.createElement("li");
+    li.style.marginBottom = "5px";
+
+    const btn = document.createElement("button");
+    btn.textContent = artist.name;
+    btn.style.width = "100%";
+    btn.style.padding = "10px";
+    btn.style.border = "none";
+    btn.style.borderRadius = "6px";
+    btn.style.background = "#f5f5f5";
+    btn.style.cursor = "pointer";
+    btn.style.fontSize = "16px";
+    btn.style.textAlign = "left";
+    btn.onmouseover = () => btn.style.background = "#e0e0e0";
+    btn.onmouseout = () => btn.style.background = "#f5f5f5";
+    btn.onclick = () => showArtistInfo(artist);
+
+    li.appendChild(btn);
+    randomNamesContainer.appendChild(li);
+  });
+}
+
+function showArtistInfo(artist) {
+  const infoDiv = document.getElementById("artistInfo");
+  infoDiv.innerHTML = `<b>${artist.name}</b><br>${artist.info}`;
+}
+
+function showArtistInfo(artist) {
+  const infoBox = document.getElementById("artistInfo");
+  infoBox.innerHTML = `
+    <div style="display:flex; gap:10px;">
+      <img src="${artist.image}" alt="${artist.name}"
+        style="width:100px; height:100px; object-fit:cover; border-radius:8px;">
+      <div>
+        <p><strong>Name:</strong> ${artist.name}</p>
+        <p><strong>Age:</strong> ${artist.age}</p>
+        <p><strong>Address:</strong> ${artist.address}</p>
+        <p><strong>FB Page:</strong> <a href="https://${artist.fb}" target="_blank">${artist.fb}</a></p>
+        <p><strong>Email:</strong> ${artist.email}</p>
+      </div>
+    </div>
+  `;
+}
+  // Likes / Dislikes
 document.querySelectorAll(".like-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const count = btn.querySelector(".like-count");
@@ -785,15 +957,17 @@ document.addEventListener("click", function(e){
         <button class="reply-btn">Reply</button>
         <ul class="reply-list"></ul>
       `;
-      list.appendChild(li);
+      list.appendChild(li);  // always at bottom
       input.value = "";
     }
   }
 
+  // Add reply
   if(e.target.classList.contains("reply-btn")){
     const li = e.target.closest("li");
     const replyList = li.querySelector(".reply-list");
 
+    // prevent multiple inputs
     if(replyList.querySelector("input")) return;
 
     const container = document.createElement("div");
@@ -814,7 +988,7 @@ document.addEventListener("click", function(e){
           <button class="reply-btn">Reply</button>
           <ul class="reply-list"></ul>
         `;
-        replyList.appendChild(replyLi);
+        replyList.appendChild(replyLi); // added at bottom
         container.remove();
       }
     });
@@ -834,6 +1008,7 @@ document.getElementById("postArtForm").addEventListener("submit", function(e){
   reader.onload = function(event){
     const imgURL = event.target.result;
 
+    // Create art-item
     const artItem = document.createElement("div");
     artItem.classList.add("art-item");
 
@@ -845,8 +1020,10 @@ document.getElementById("postArtForm").addEventListener("submit", function(e){
       </div>
     `;
 
+    // Append to Types of Art
     document.getElementById("typesOfArt").appendChild(artItem);
 
+    // Reset form
     document.getElementById("postArtForm").reset();
   }
 
