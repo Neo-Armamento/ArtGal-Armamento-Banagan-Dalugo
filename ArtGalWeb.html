@@ -5,87 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ArtHub</title>
 <style>
-  * { 
-    margin:0; 
-    padding:0; 
-    box-sizing:border-box; 
-    font-family: Arial, sans-serif; 
-  }
-
-  body, p, span, li, input, button {
-    font-size: 18px;
-    text-align: justify;
-  }
-
+  * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
+  body, p, span, li, input, button { font-size: 18px; text-align: justify; }
   h1 { font-size: 36px; font-weight: bold; }
   h2 { font-size: 30px; font-weight: bold; }
   h3 { font-size: 26px; font-weight: bold; }
-
-  body {
-    background: linear-gradient(to bottom, #b3e5fc, #4fc3f7); /* pastel sky blue -> pastel dark blue */
-    min-height: 100vh;
-    color: #333;
-    transition: 0.3s;
-  }
-
+  body { background: linear-gradient(to bottom, #b3e5fc, #4fc3f7); min-height: 100vh; color: #333; transition: 0.3s; }
   :root { --primary-color: orange; }
 
-  #loginPage {
-    width:100%; 
-    height:100vh; 
-    display:flex; 
-    flex-direction:column;
-    justify-content:center; 
-    align-items:center; 
-    background: linear-gradient(to bottom, #b3e5fc, #4fc3f7);
-    color: #fff;
-  }
+  #loginPage { width:100%; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background: linear-gradient(to bottom, #b3e5fc, #4fc3f7); color: #fff; }
   #loginPage h1 { margin-bottom:20px; color: var(--primary-color); }
   #loginPage input, #loginPage select { width:300px; padding:12px; margin:8px 0; border-radius:8px; border:1px solid #ccc; }
   #loginPage button { width:300px; padding:12px; background: var(--primary-color); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
   #loginMessage { margin-top:10px; font-weight:bold; }
 
   #mainContent { display:none; padding:20px; }
-
   header, footer { background: var(--primary-color); color:white; text-align:center; padding:15px; border-radius:8px; }
-
-  nav {
-    width:100%; background:#fff; padding:10px 20px;
-    display:flex; justify-content:space-between; align-items:center;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:20px;
-  }
+  nav { width:100%; background:#fff; padding:10px 20px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 5px rgba(0,0,0,0.1); margin-bottom:20px; }
   nav a { margin-right:15px; text-decoration:none; color: var(--primary-color); font-weight:bold; }
-
-  .container {
-    width:100%; max-width:1200px; margin:0 auto; padding:20px;
-    display:flex; flex-direction:column; align-items:center; gap:20px;
-  }
+  .container { width:100%; max-width:1200px; margin:0 auto; padding:20px; display:flex; flex-direction:column; align-items:center; gap:20px; }
   .container input[type="text"], .container button { width:100%; max-width:500px; }
-
-  /* Cards & Art Descriptions Gradient */
-  .card, .art-item .art-description {
-    background: linear-gradient(to bottom, #e1f5fe, #b3e5fc); /* pastel light blue */
-    border-radius:10px;
-    padding:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    transition:0.3s;
-    text-align:center;
-  }
+  .card, .art-item .art-description { background: linear-gradient(to bottom, #e1f5fe, #b3e5fc); border-radius:10px; padding:15px; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition:0.3s; text-align:center; }
   .card img { width:100%; border-radius:8px; margin-bottom:10px; cursor:pointer; }
   .card:hover { transform:scale(1.03); }
-
-  #intro.card { width:100%; max-width:100%; margin:0 auto; }
-  #intro.card img { width:100%; max-height:100%; object-fit:cover; border-radius:10px; }
-  #intro.card p { text-align:justify; line-height:1.6; margin-top:10px; font-size:20px; }
 
   .art-item { display:flex; align-items:flex-start; gap:20px; margin-bottom:30px; }
   .art-item img { width:250px; height:250px; object-fit:cover; border-radius:10px; margin-right:15px; }
   .art-item .art-description { flex:1; font-size:20px; line-height:1.6; }
   .art-description h3 { color: var(--primary-color); margin-bottom:5px; }
-  .art-description p { margin-bottom:8px; }
 
-  button { font-size:18px; font-weight:600; padding:10px 18px; }
-
+  button { font-size:18px; font-weight:600; padding:10px 18px; cursor:pointer; }
   small, .small-text { font-size:16px; }
 
   form { display:flex; flex-direction:column; gap:10px; margin-top:10px; }
@@ -98,22 +47,15 @@
   .modal-content { margin:auto; display:block; max-width:80%; max-height:80%; border-radius:10px; }
   .close { position:absolute; top:20px; right:35px; color:white; font-size:40px; font-weight:bold; cursor:pointer; }
 
-  #output {
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap:15px;
-    width:100%;
-    margin-top:20px;
-  }
+  #output { display:grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap:15px; width:100%; margin-top:20px; }
   #output .card { width:100%; max-width:350px; }
   #output .card .title { font-weight:bold; margin-bottom:5px; color: var(--primary-color); }
   #output .card button { margin-top:5px; padding:8px 12px; border:none; background: var(--primary-color); color:white; border-radius:6px; cursor:pointer; font-size:14px; transition:0.2s; }
   #output .card button:hover { background:darkorange; }
 
-  .responsive-gallery img { width:200px; height:200px; object-fit:cover; border-radius:10px; margin:5px; transition:0.3s; }
   .responsive-gallery { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .responsive-gallery img { width:200px; height:200px; object-fit:cover; border-radius:10px; margin:5px; transition:0.3s; }
 
-  /* Likes / Dislikes / Comments */
   .art-feedback { margin-top:15px; text-align:justify; }
   .art-feedback .feedback-buttons { display:flex; gap:10px; margin-bottom:10px; }
   .art-feedback .feedback-buttons button { padding:6px 12px; font-size:16px; border:none; border-radius:6px; cursor:pointer; background-color: var(--primary-color); color:white; transition:0.2s; }
@@ -124,124 +66,32 @@
   .art-feedback .add-comment-btn { padding:6px 12px; width:fit-content; border:none; border-radius:6px; cursor:pointer; background-color: var(--primary-color); color:white; transition:0.2s; }
   .art-feedback .add-comment-btn:hover { background-color:darkorange; }
 
-  /* Comments & Replies Gradient */
-  .comment-list > li { background: linear-gradient(to bottom, #e1f5fe, #b3e5fc); padding:8px 10px; border-radius:6px; margin-bottom:8px; max-width:fit-content; }
-  .reply-list li { background: linear-gradient(to bottom, #d0f0fd, #a0e0fb); padding:6px 10px; border-radius:6px; margin-bottom:5px; max-width:fit-content; margin-left:20px; }
-
-  .comment-container, .reply-container {
-    display:block; max-width:80%; word-wrap:break-word; border-radius:8px; padding:10px; margin-bottom:8px;
-  }
-  .reply-container { background:#e0e0e0; margin-left:20px; }
-  .reply-btn { margin-top:5px; font-size:12px; padding:2px 6px; cursor:pointer; background:transparent; border:none; color: var(--primary-color); }
-  .reply-btn:hover { text-decoration:underline; }
-  .reply-input-container { margin-top:5px; display:flex; gap:5px; }
-  .reply-input-container input { flex:1; padding:6px 10px; border-radius:6px; border:1px solid #ccc; }
-  .reply-input-container button { padding:6px 10px; border-radius:6px; border:none; background-color: var(--primary-color); color:white; cursor:pointer; }
-
-.post-art-section {
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 15px;
-  background: linear-gradient(to bottom, #e1f5fe, #b3e5fc);
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.post-art-section input, .post-art-section textarea, .post-art-section button {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 6px;
-  border:1px solid #ccc;
-}
-
-.post-art-section button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-}
-
-.post-art-section button:hover {
-  background-color: darkorange;
-}
-
-.types-of-art .art-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  margin-bottom: 20px;
-  background: linear-gradient(to bottom, #e1f5fe, #b3e5fc);
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.types-of-art .art-item img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.types-of-art .art-description {
-  flex: 1;
-  font-size: 18px;
-  line-height: 1.5;
-}
-
-#contact {
-  display: flex;
-  justify-content: center;
-}
-
-#contact aside {
-  width: 100%;
-  max-width: 600px;
-  background: #f8f8f8;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-#contact form input,
-#contact form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-#contact button {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 100%;
-}
+  /* Artist overlay / clickable random list */
+  #artistOverlay { display:none; position:absolute; top:50px; right:20px; background:white; border:1px solid #ccc; padding:10px; border-radius:6px; max-height:400px; overflow-y:auto; z-index:999; }
+  #artistOverlay li { list-style:none; margin-bottom:5px; cursor:pointer; padding:5px; border-radius:4px; transition:0.2s; }
+  #artistOverlay li:hover { background:#f0f0f0; }
 </style>
-
 </head>
+<body>
+
 <body>
 
 <div id="loginPage">
   <h1>Welcome to ArtHub</h1>
+  <label for="role">Select Role:</label>
   <select id="role">
     <option value="administrator">Administrator</option>
     <option value="client">Client</option>
     <option value="artist">Artist</option>
   </select>
+  <label for="username">Username:</label>
   <input id="username" placeholder="Username">
+  <label for="password">Password:</label>
   <input id="password" type="password" placeholder="Password">
   <button onclick="login()">Log In</button>
   <div id="loginMessage"></div>
 </div>
+
 
 <div id="mainContent">
   <header>
@@ -698,339 +548,144 @@
 </div>
 
 <script>
-  function login() {
-    const role = document.getElementById("role").value;
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const message = document.getElementById("loginMessage");
+// -------- ARTISTS DATA --------
+const artists = [
+  { name: "Nepthali", age: 22, address: "Cagayan De Oro City", fb: "https://web.facebook.com/photo/?fbid=9541345695877917&set=a.433257306686847t", email: "anepthaliaya@gmail.com", image: "assets/neptali.jpg" },
+  { name: "Den Art", age: 28, address: "Parang Maguindanao", fb: "https://web.facebook.com/photo/?fbid=122145668840398639&set=a.122104581302398639&__tn__=%3C", email: "Artden@gmail.com", image: "assets/den.jpg" },
+  { name: "Myco Lava", age: 25, address: "Pagbilao Quezon", fb: "https://web.facebook.com/myko.lava?__tn__=%3C", email: "MycoLava@gmail.com", image: "assets/myko.jpg" },
+  { name: "Guhit Rhenz", age: 30, address: "SAn JOse Delmonte Bulacan", fb: "https://web.facebook.com/guhitrhenzofficial", email: "GuhitRhenz@gmail.com", image: "assets/rhenz.jpg" },
+  { name: "Thirdy Arts", age: 21, address: "Pagbilao Quezon", fb: "https://web.facebook.com/photo/?fbid=1809935503263437&set=a.108949026695435&__tn__=%3Ck", email: "dalugollln2gmail.com", image: "assets/thiirdy.jpg" },
+  { name: "Vermont", age: 24, address: "Lucena City", fb: "https://web.facebook.com/photo/?fbid=1223192245505443&set=a.892869028537768", email: "vermont@gmail.com", image: "assets/vernmot.jpg" },
+  { name: "Joan", age: 26, address: "Pagbilao", fb: "https://web.facebook.com/joann.callos.90?__tn__=%3C", email: "joan@gmail.com", image: "assets/joan.jpg" },
+  { name: "Jerome Berredo", age: 29, address: "Tay Tay Rizal", fb: "https://web.facebook.com/jheromebarredo16?__tn__=%3C", email: "jerome@gmail.com", image: "assets/jerome.jpg" },
+  { name: "Chaboy Dela Cruz", age: 23, address: "Tay Tay Rizal", fb: "https://web.facebook.com/chaboy.dela.cruz.2024?__tn__=%3C", email: "ChabotDelaCruz@gmail.com", image: "assets/chaboy.jpg" },
+  { name: "Ser Je Art", age: 31, address: "Tayabas city", fb: "https://web.facebook.com/profile.php?id=61561204592595", email: "serjearts@gmail.com", image: "assets/sirje.jpg" }
+];
 
-    const accounts = {
-      administrator: { username: "administrator", password: "lifeof2004" },
-      client: { username: "client123", password: "clientpass" },
-      artist: { username: "artist123", password: "artistpass" }
-    };
+// -------- LOGIN FUNCTION --------
+function login() {
+  const role = document.getElementById("role").value;
+  const username = document.getElementById("username").value.trim();
+  const msg = document.getElementById("loginMessage");
 
-    if(username === accounts[role].username && password === accounts[role].password) {
-      message.style.color = "green";
-      message.innerText = `Welcome, ${role.toUpperCase()}!`;
-      document.getElementById("loginPage").style.display = "none";
-      document.getElementById("mainContent").style.display = "block";
-      document.querySelector(".nav-bar").style.display = "flex";
-    } else {
-      message.style.color = "red";
-      message.innerText = "Invalid credentials. Try again.";
-    }
+  if(!username){ 
+    msg.style.color = "red"; 
+    msg.innerText = "Please enter username."; 
+    return; 
   }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // ...your existing login, modal, comments, likes/dislikes, post art logic...
+  msg.style.color = "green"; 
+  msg.innerText = `Welcome, ${role.toUpperCase()}!`;
+  document.getElementById("loginPage").style.display = "none";
+  document.getElementById("mainContent").style.display = "block";
+}
 
-  // Toggle API search container
-  const toggleBtn = document.getElementById("toggleApiSearch");
-  const apiContainer = document.getElementById("apiSearchContainer");
+// -------- ARTIST OVERLAY --------
+const showBtn = document.getElementById("showArtistsBtn");
+const overlay = document.getElementById("artistOverlay");
+const ul = document.getElementById("randomNames");
 
-  toggleBtn.addEventListener("click", () => {
-    if(apiContainer.style.display === "none"){
-      apiContainer.style.display = "block";
-    } else {
-      apiContainer.style.display = "none";
-    }
-  });
-
-  // API search functionality
-  document.getElementById("btn").addEventListener("click", async () => {
-    const query = document.getElementById("searchInput").value.trim();
-    const output = document.getElementById("output");
-    if(!query){ output.innerHTML="<p>Please enter a search term</p>"; return; }
-    output.innerHTML="<p>Loading...</p>";
-    try {
-      const res = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(query)}&limit=20&fields=id,title,image_id,artist_title,api_link`);
-      const data = await res.json();
-      if(!data.data || data.data.length===0){ output.innerHTML="<p>No paintings found</p>"; return; }
-      output.innerHTML="";
-      data.data.forEach(artwork => {
-        const imgUrl = artwork.image_id ? `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg` : '';
-        const title = artwork.title || 'Untitled';
-        const artist = artwork.artist_title || 'Unknown Artist';
-        const moreLink = artwork.api_link || '#';
-        output.innerHTML += `
-          <div class="card">
-            <img src="${imgUrl}" alt="${title}">
-            <div class="title">${title}</div>
-            <div>By: ${artist}</div>
-            <button onclick="window.open('${moreLink}', '_blank')">More Info</button>
-          </div>`;
-      });
-    } catch(err){
-      output.innerHTML="<p>❌ Failed to load data</p>";
-      console.error(err);
-    }
-  });
-
-});
-
-document.getElementById("showArtistsBtn").addEventListener("click", function () {
-  const overlay = document.getElementById("artistOverlay");
-  const list = document.getElementById("randomNames");
-  overlay.style.display = overlay.style.display === "none" ? "block" : "none";
-  list.innerHTML = ""; // clear
+showBtn.addEventListener("click", () => {
+  overlay.style.display = "flex";
+  ul.innerHTML = '<li id="closeOverlay">Close ✖</li>';
 
   artists.forEach(artist => {
     const li = document.createElement("li");
-    li.textContent = artist.name;
+    li.innerHTML = `<strong>${artist.name}</strong>`;
     li.style.cursor = "pointer";
-    li.style.padding = "5px";
-
-    li.addEventListener("click", function () {
-      showArtistInfo(artist);
-    });
-
-    list.appendChild(li);
+    li.onclick = () => displayArtistInfo(artist);
+    ul.appendChild(li);
   });
 });
 
-const artists = [
-  {
-    name: "Nepthali",
-    age: 22,
-    address: "123 Main St",
-    fb: "facebook.com/aaliyahArt",
-    email: "aaliyah@example.com",
-    image: "assets/artists/aaliyah.jpg"
-  },
-  {
-    name: "Den Art",
-    age: 28,
-    address: "456 Art Lane",
-    fb: "facebook.com/brentSketch",
-    email: "brent@example.com",
-    image: "assets/artists/brent.jpg"
-  },
-  {
-    name: "myco Lava",
-    age: 25,
-    address: "789 Studio Blvd",
-    fb: "facebook.com/chloePaints",
-    email: "chloe@example.com",
-    image: "assets/artists/chloe.jpg"
-  },
-  // --- Additional Artists ---
-  {
-    name: "guhiit Rhenz",
-    age: 30,
-    address: "101 Pixel Ave",
-    fb: "facebook.com/danielDigital",
-    email: "daniel@example.com",
-    image: "assets/artists/daniel.jpg"
-  },
-  {
-    name: "Thirdy Arts",
-    age: 27,
-    address: "202 Brush St",
-    fb: "facebook.com/ellaBrushWork",
-    email: "ella@example.com",
-    image: "assets/artists/ella.jpg"
-  },
-  {
-    name: "Vermont",
-    age: 24,
-    address: "303 Sketchway",
-    fb: "facebook.com/felixCreatives",
-    email: "felix@example.com",
-    image: "assets/artists/felix.jpg"
-  },
-  {
-    name: "joan",
-    age: 26,
-    address: "404 Gallery Blvd",
-    fb: "facebook.com/giannaArt",
-    email: "gianna@example.com",
-    image: "assets/artists/gianna.jpg"
-  },
-  {
-    name: "Jerome Berredo",
-    age: 29,
-    address: "505 Canvas Road",
-    fb: "facebook.com/hugoArts",
-    email: "hugo@example.com",
-    image: "assets/artists/hugo.jpg"
-  },
-  {
-    name: "Chaboy Dela Cruz",
-    age: 23,
-    address: "606 Creative Park",
-    fb: "facebook.com/isabellaDesigns",
-    email: "isabella@example.com",
-    image: "assets/artists/isabella.jpg"
-  },
-  {
-    name: "Ser Je Art",
-    age: 31,
-    address: "707 Portrait Lane",
-    fb: "facebook.com/jasperPortraits",
-    email: "jasper@example.com",
-    image: "assets/artists/jasper.jpg"
-  }
-];
-
-showBtn.addEventListener("click", () => {
-  // Toggle overlay visibility
-  overlay.style.display = overlay.style.display === "block" ? "none" : "block";
-  if(overlay.style.display === "block") showRandomNames();
-});
-
-function showRandomNames() {
-  randomNamesContainer.innerHTML = "";
-  const random15 = artists.sort(() => 0.5 - Math.random()).slice(0, 15);
-
-  random15.forEach(artist => {
-    const li = document.createElement("li");
-    li.style.marginBottom = "5px";
-
-    const btn = document.createElement("button");
-    btn.textContent = artist.name;
-    btn.style.width = "100%";
-    btn.style.padding = "10px";
-    btn.style.border = "none";
-    btn.style.borderRadius = "6px";
-    btn.style.background = "#f5f5f5";
-    btn.style.cursor = "pointer";
-    btn.style.fontSize = "16px";
-    btn.style.textAlign = "left";
-    btn.onmouseover = () => btn.style.background = "#e0e0e0";
-    btn.onmouseout = () => btn.style.background = "#f5f5f5";
-    btn.onclick = () => showArtistInfo(artist);
-
-    li.appendChild(btn);
-    randomNamesContainer.appendChild(li);
-  });
-}
-
-function showArtistInfo(artist) {
-  const infoDiv = document.getElementById("artistInfo");
-  infoDiv.innerHTML = `<b>${artist.name}</b><br>${artist.info}`;
-}
-
-function showArtistInfo(artist) {
-  const infoBox = document.getElementById("artistInfo");
-  infoBox.innerHTML = `
-    <div style="display:flex; gap:10px;">
-      <img src="${artist.image}" alt="${artist.name}"
-        style="width:100px; height:100px; object-fit:cover; border-radius:8px;">
-      <div>
-        <p><strong>Name:</strong> ${artist.name}</p>
-        <p><strong>Age:</strong> ${artist.age}</p>
-        <p><strong>Address:</strong> ${artist.address}</p>
-        <p><strong>FB Page:</strong> <a href="https://${artist.fb}" target="_blank">${artist.fb}</a></p>
-        <p><strong>Email:</strong> ${artist.email}</p>
-      </div>
-    </div>
+// Display artist info inside #artistInfo
+function displayArtistInfo(artist){
+  const div = document.getElementById("artistInfo");
+  div.innerHTML = `
+    <img src="${artist.image}" alt="${artist.name}" style="width:100%; border-radius:8px; margin-bottom:10px;">
+    <h2>${artist.name}</h2>
+    <p><strong>Age:</strong> ${artist.age}</p>
+    <p><strong>Address:</strong> ${artist.address}</p>
+    <p><a href="${artist.fb}" target="_blank">Facebook</a></p>
+    <p><a href="mailto:${artist.email}">${artist.email}</a></p>
   `;
+  overlay.style.display = "none";
 }
-  // Likes / Dislikes
-document.querySelectorAll(".like-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const count = btn.querySelector(".like-count");
-    count.textContent = parseInt(count.textContent) + 1;
-  });
+
+// Close overlay on background or Close button click
+overlay.addEventListener("click", (e) => {
+  if(e.target === overlay || e.target.id === "closeOverlay"){
+    overlay.style.display = "none";
+  }
 });
 
-document.querySelectorAll(".dislike-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const count = btn.querySelector(".dislike-count");
-    count.textContent = parseInt(count.textContent) + 1;
-  });
+// -------- API SEARCH --------
+const toggleBtn = document.getElementById("toggleApiSearch");
+const apiContainer = document.getElementById("apiSearchContainer");
+
+toggleBtn.addEventListener("click", () => {
+  apiContainer.style.display = apiContainer.style.display === "block" ? "none" : "block";
 });
 
+document.getElementById("btn").addEventListener("click", async () => {
+  const query = document.getElementById("searchInput").value.trim();
+  const output = document.getElementById("output");
+  if(!query){ 
+    output.innerHTML = "<p>Please enter a search term</p>"; 
+    return; 
+  }
+
+  output.innerHTML = "<p>Loading...</p>";
+
+  try {
+    const res = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(query)}&limit=20&fields=id,title,image_id,artist_title,api_link`);
+    const data = await res.json();
+
+    if(!data.data || data.data.length === 0){ 
+      output.innerHTML = "<p>No paintings found</p>"; 
+      return; 
+    }
+
+    output.innerHTML = "";
+    data.data.forEach(art => {
+      const imgUrl = art.image_id ? `https://www.artic.edu/iiif/2/${art.image_id}/full/843,/0/default.jpg` : '';
+      output.innerHTML += `
+        <div class="card">
+          <img src="${imgUrl}">
+          <div class="title">${art.title || 'Untitled'}</div>
+          <div>${art.artist_title || 'Unknown'}</div>
+          <button onclick="window.open('${art.api_link}','_blank')">More Info</button>
+        </div>`;
+    });
+  } catch(err){ 
+    output.innerHTML = "<p>❌ Failed to load data</p>"; 
+    console.error(err); 
+  }
+});
+
+// -------- LIKES / DISLIKES / COMMENTS --------
 document.addEventListener("click", function(e){
-  // Add comment
-  if(e.target.classList.contains("add-comment-btn")){
-    const section = e.target.closest(".comments-section");
-    const input = section.querySelector(".comment-input");
-    const list = section.querySelector(".comment-list");
-
+  if(e.target.classList.contains("like-btn")){
+    const c = e.target.querySelector(".like-count"); 
+    c.textContent = parseInt(c.textContent) + 1;
+  } else if(e.target.classList.contains("dislike-btn")){
+    const c = e.target.querySelector(".dislike-count"); 
+    c.textContent = parseInt(c.textContent) + 1;
+  } else if(e.target.classList.contains("add-comment-btn")){
+    const sec = e.target.closest(".comments-section");
+    const input = sec.querySelector(".comment-input");
+    const list = sec.querySelector(".comment-list");
     if(input.value.trim() !== ""){
       const li = document.createElement("li");
-      li.classList.add("comment-container");
-      li.innerHTML = `
-        <span>${input.value}</span>
-        <button class="reply-btn">Reply</button>
-        <ul class="reply-list"></ul>
-      `;
-      list.appendChild(li);  // always at bottom
+      li.className = "comment-container"; 
+      li.textContent = input.value;
+      list.appendChild(li); 
       input.value = "";
     }
   }
-
-  // Add reply
-  if(e.target.classList.contains("reply-btn")){
-    const li = e.target.closest("li");
-    const replyList = li.querySelector(".reply-list");
-
-    // prevent multiple inputs
-    if(replyList.querySelector("input")) return;
-
-    const container = document.createElement("div");
-    container.classList.add("reply-input-container");
-    container.innerHTML = `
-      <input type="text" placeholder="Reply...">
-      <button class="post-reply-btn">Post Reply</button>
-    `;
-    replyList.appendChild(container);
-
-    container.querySelector(".post-reply-btn").addEventListener("click", () => {
-      const replyInput = container.querySelector("input");
-      if(replyInput.value.trim() !== ""){
-        const replyLi = document.createElement("li");
-        replyLi.classList.add("reply-container");
-        replyLi.innerHTML = `
-          <span>${replyInput.value}</span>
-          <button class="reply-btn">Reply</button>
-          <ul class="reply-list"></ul>
-        `;
-        replyList.appendChild(replyLi); // added at bottom
-        container.remove();
-      }
-    });
-  }
 });
-
-document.getElementById("postArtForm").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  const title = document.getElementById("artTitle").value.trim();
-  const description = document.getElementById("artDescription").value.trim();
-  const imageFile = document.getElementById("artImage").files[0];
-
-  if(!imageFile) return;
-
-  const reader = new FileReader();
-  reader.onload = function(event){
-    const imgURL = event.target.result;
-
-    // Create art-item
-    const artItem = document.createElement("div");
-    artItem.classList.add("art-item");
-
-    artItem.innerHTML = `
-      <img src="${imgURL}" alt="${title}">
-      <div class="art-description">
-        <h3>${title}</h3>
-        <p>${description}</p>
-      </div>
-    `;
-
-    // Append to Types of Art
-    document.getElementById("typesOfArt").appendChild(artItem);
-
-    // Reset form
-    document.getElementById("postArtForm").reset();
-  }
-
-  reader.readAsDataURL(imageFile);
-});
-
 </script>
+
 
 </body>
 </html>
