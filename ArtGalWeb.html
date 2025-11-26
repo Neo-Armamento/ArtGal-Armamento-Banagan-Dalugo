@@ -551,21 +551,22 @@
 // -------- ARTISTS DATA --------
 const artists = [
   { name: "Nepthali", age: 22, address: "Cagayan De Oro City", fb: "https://web.facebook.com/photo/?fbid=9541345695877917&set=a.433257306686847t", email: "anepthaliaya@gmail.com", image: "assets/neptali.jpg" },
-  { name: "Den Art", age: 28, address: "Parang Maguindanao", fb: "https://web.facebook.com/photo/?fbid=122145668840398639&set=a.122104581302398639&__tn__=%3C", email: "Artden@gmail.com", image: "assets/den.jpg" },
-  { name: "Myco Lava", age: 25, address: "Pagbilao Quezon", fb: "https://web.facebook.com/myko.lava?__tn__=%3C", email: "MycoLava@gmail.com", image: "assets/myko.jpg" },
-  { name: "Guhit Rhenz", age: 30, address: "SAn JOse Delmonte Bulacan", fb: "https://web.facebook.com/guhitrhenzofficial", email: "GuhitRhenz@gmail.com", image: "assets/rhenz.jpg" },
-  { name: "Thirdy Arts", age: 21, address: "Pagbilao Quezon", fb: "https://web.facebook.com/photo/?fbid=1809935503263437&set=a.108949026695435&__tn__=%3Ck", email: "dalugollln2gmail.com", image: "assets/thiirdy.jpg" },
+  { name: "Den Art", age: 28, address: "Parang, Maguindanao", fb: "https://web.facebook.com/photo/?fbid=122145668840398639&set=a.122104581302398639&__tn__=%3C", email: "Artden@gmail.com", image: "assets/den.jpg" },
+  { name: "Myco Lava", age: 25, address: "Pagbilao, Quezon", fb: "https://web.facebook.com/myko.lava?__tn__=%3C", email: "MycoLava@gmail.com", image: "assets/myko.jpg" },
+  { name: "Guhit Rhenz", age: 30, address: "San Jose Delmonte, Bulacan", fb: "https://web.facebook.com/guhitrhenzofficial", email: "GuhitRhenz@gmail.com", image: "assets/rhenz.jpg" },
+  { name: "Thirdy Arts", age: 21, address: "Pagbilao, Quezon", fb: "https://web.facebook.com/photo/?fbid=1809935503263437&set=a.108949026695435&__tn__=%3Ck", email: "dalugollln2gmail.com", image: "assets/thiirdy.jpg" },
   { name: "Vermont", age: 24, address: "Lucena City", fb: "https://web.facebook.com/photo/?fbid=1223192245505443&set=a.892869028537768", email: "vermont@gmail.com", image: "assets/vernmot.jpg" },
-  { name: "Joan", age: 26, address: "Pagbilao", fb: "https://web.facebook.com/joann.callos.90?__tn__=%3C", email: "joan@gmail.com", image: "assets/joan.jpg" },
-  { name: "Jerome Berredo", age: 29, address: "Tay Tay Rizal", fb: "https://web.facebook.com/jheromebarredo16?__tn__=%3C", email: "jerome@gmail.com", image: "assets/jerome.jpg" },
-  { name: "Chaboy Dela Cruz", age: 23, address: "Tay Tay Rizal", fb: "https://web.facebook.com/chaboy.dela.cruz.2024?__tn__=%3C", email: "ChabotDelaCruz@gmail.com", image: "assets/chaboy.jpg" },
-  { name: "Ser Je Art", age: 31, address: "Tayabas city", fb: "https://web.facebook.com/profile.php?id=61561204592595", email: "serjearts@gmail.com", image: "assets/sirje.jpg" }
+  { name: "Joan", age: 26, address: "Pagbilao, Quezon", fb: "https://web.facebook.com/joann.callos.90?__tn__=%3C", email: "joan@gmail.com", image: "assets/joan.jpg" },
+  { name: "Jerome Berredo", age: 29, address: "Tay Tay, Rizal", fb: "https://web.facebook.com/jheromebarredo16?__tn__=%3C", email: "jerome@gmail.com", image: "assets/jerome.jpg" },
+  { name: "Chaboy Dela Cruz", age: 23, address: "Tay Tay, Rizal", fb: "https://web.facebook.com/chaboy.dela.cruz.2024?__tn__=%3C", email: "ChabotDelaCruz@gmail.com", image: "assets/chaboy.jpg" },
+  { name: "Ser Je Art", age: 31, address: "Tayabas City", fb: "https://web.facebook.com/profile.php?id=61561204592595", email: "serjearts@gmail.com", image: "assets/serje.jpg" }
 ];
 
 // -------- LOGIN FUNCTION --------
 function login() {
   const role = document.getElementById("role").value;
   const username = document.getElementById("username").value.trim();
+
   const msg = document.getElementById("loginMessage");
 
   if(!username){ 
