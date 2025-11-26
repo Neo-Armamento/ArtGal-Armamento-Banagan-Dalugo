@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ArtHub</title>
 <style>
+  :root {
+  --primary-color: #yourcolor;
+}
+
   * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }
   body, p, span, li, input, button { font-size: 18px; text-align: justify; }
   h1 { font-size: 36px; font-weight: bold; }
@@ -70,6 +74,76 @@
   #artistOverlay { display:none; position:absolute; top:50px; right:20px; background:white; border:1px solid #ccc; padding:10px; border-radius:6px; max-height:400px; overflow-y:auto; z-index:999; }
   #artistOverlay li { list-style:none; margin-bottom:5px; cursor:pointer; padding:5px; border-radius:4px; transition:0.2s; }
   #artistOverlay li:hover { background:#f0f0f0; }
+
+  /* Drawer Button Style */
+.drawer-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Drawer Content */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100vh;
+  background: white;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  padding: 20px;
+  transition: 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
+}
+
+.drawer.open {
+  right: 0;
+}
+
+.drawer h3 {
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.drawer .close-drawer {
+  align-self: flex-end;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #666;
+}
+
+.account-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
 </style>
 </head>
 <body>
@@ -79,11 +153,11 @@
 <div id="loginPage">
   <h1>Welcome to ArtHub</h1>
   <label for="role">Select Role:</label>
-  <select id="role">
-    <option value="administrator">Administrator</option>
-    <option value="client">Client</option>
-    <option value="artist">Artist</option>
-  </select>
+<select id="role">
+  <option value="administrator">Administrator</option>
+  <option value="client">Client</option>
+  <option value="artist">Artist</option>
+</select>
   <label for="username">Username:</label>
   <input id="username" placeholder="Username">
   <label for="password">Password:</label>
@@ -97,6 +171,19 @@
   <header>
     <h2>ArtHub: Creative Space</h2>
   </header>
+
+<!-- Account Info Button -->
+<button id="accountInfoBtn" class="account-btn">👤 Account</button>
+
+<!-- Account Info Details -->
+<div id="accountDetails" style="display:none; position:absolute; top:60px; right:20px; width:250px; background:white; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); padding:15px; z-index:1000;">
+  <h3>Account Info</h3>
+  <p><strong>Username:</strong> <span id="accUser"></span></p>
+  <p><strong>Role:</strong> <span id="accRole"></span></p>
+  <hr>
+  <button style="width:100%; padding:8px; margin-top:5px;">Settings</button>
+  <button style="width:100%; padding:8px; margin-top:5px;">Logout</button>
+</div>
 
  <nav class="nav-bar">
   <div>
@@ -551,34 +638,51 @@
 // -------- ARTISTS DATA --------
 const artists = [
   { name: "Nepthali", age: 22, address: "Cagayan De Oro City", fb: "https://web.facebook.com/photo/?fbid=9541345695877917&set=a.433257306686847t", email: "anepthaliaya@gmail.com", image: "assets/neptali.jpg" },
-  { name: "Den Art", age: 28, address: "Parang, Maguindanao", fb: "https://web.facebook.com/photo/?fbid=122145668840398639&set=a.122104581302398639&__tn__=%3C", email: "Artden@gmail.com", image: "assets/den.jpg" },
-  { name: "Myco Lava", age: 25, address: "Pagbilao, Quezon", fb: "https://web.facebook.com/myko.lava?__tn__=%3C", email: "MycoLava@gmail.com", image: "assets/myko.jpg" },
-  { name: "Guhit Rhenz", age: 30, address: "San Jose Delmonte, Bulacan", fb: "https://web.facebook.com/guhitrhenzofficial", email: "GuhitRhenz@gmail.com", image: "assets/rhenz.jpg" },
-  { name: "Thirdy Arts", age: 21, address: "Pagbilao, Quezon", fb: "https://web.facebook.com/photo/?fbid=1809935503263437&set=a.108949026695435&__tn__=%3Ck", email: "dalugollln2gmail.com", image: "assets/thiirdy.jpg" },
+  { name: "Den Art", age: 28, address: "Parang Maguindanao", fb: "https://web.facebook.com/photo/?fbid=122145668840398639&set=a.122104581302398639&__tn__=%3C", email: "Artden@gmail.com", image: "assets/den.jpg" },
+  { name: "Myco Lava", age: 25, address: "Pagbilao Quezon", fb: "https://web.facebook.com/myko.lava?__tn__=%3C", email: "MycoLava@gmail.com", image: "assets/myko.jpg" },
+  { name: "Guhit Rhenz", age: 30, address: "SAn JOse Delmonte Bulacan", fb: "https://web.facebook.com/guhitrhenzofficial", email: "GuhitRhenz@gmail.com", image: "assets/rhenz.jpg" },
+  { name: "Thirdy Arts", age: 21, address: "Pagbilao Quezon", fb: "https://web.facebook.com/photo/?fbid=1809935503263437&set=a.108949026695435&__tn__=%3Ck", email: "dalugollln2gmail.com", image: "assets/thiirdy.jpg" },
   { name: "Vermont", age: 24, address: "Lucena City", fb: "https://web.facebook.com/photo/?fbid=1223192245505443&set=a.892869028537768", email: "vermont@gmail.com", image: "assets/vernmot.jpg" },
-  { name: "Joan", age: 26, address: "Pagbilao, Quezon", fb: "https://web.facebook.com/joann.callos.90?__tn__=%3C", email: "joan@gmail.com", image: "assets/joan.jpg" },
-  { name: "Jerome Berredo", age: 29, address: "Tay Tay, Rizal", fb: "https://web.facebook.com/jheromebarredo16?__tn__=%3C", email: "jerome@gmail.com", image: "assets/jerome.jpg" },
-  { name: "Chaboy Dela Cruz", age: 23, address: "Tay Tay, Rizal", fb: "https://web.facebook.com/chaboy.dela.cruz.2024?__tn__=%3C", email: "ChabotDelaCruz@gmail.com", image: "assets/chaboy.jpg" },
-  { name: "Ser Je Art", age: 31, address: "Tayabas City", fb: "https://web.facebook.com/profile.php?id=61561204592595", email: "serjearts@gmail.com", image: "assets/serje.jpg" }
+  { name: "Joan", age: 26, address: "Pagbilao", fb: "https://web.facebook.com/joann.callos.90?__tn__=%3C", email: "joan@gmail.com", image: "assets/joan.jpg" },
+  { name: "Jerome Berredo", age: 29, address: "Tay Tay Rizal", fb: "https://web.facebook.com/jheromebarredo16?__tn__=%3C", email: "jerome@gmail.com", image: "assets/jerome.jpg" },
+  { name: "Chaboy Dela Cruz", age: 23, address: "Tay Tay Rizal", fb: "https://web.facebook.com/chaboy.dela.cruz.2024?__tn__=%3C", email: "ChabotDelaCruz@gmail.com", image: "assets/chaboy.jpg" },
+  { name: "Ser Je Art", age: 31, address: "Tayabas city", fb: "https://web.facebook.com/profile.php?id=61561204592595", email: "serjearts@gmail.com", image: "assets/serje.jpg" }
 ];
 
-// -------- LOGIN FUNCTION --------
 function login() {
-  const role = document.getElementById("role").value;
   const username = document.getElementById("username").value.trim();
+  const role = document.getElementById("role").value;
 
   const msg = document.getElementById("loginMessage");
-
-  if(!username){ 
+  if (!username) { 
     msg.style.color = "red"; 
     msg.innerText = "Please enter username."; 
     return; 
   }
 
   msg.style.color = "green"; 
-  msg.innerText = `Welcome, ${role.toUpperCase()}!`;
+  msg.innerText = `Welcome, ${username}! Your role is: ${role.toUpperCase()}`;
+
   document.getElementById("loginPage").style.display = "none";
   document.getElementById("mainContent").style.display = "block";
+
+  // Display account info sa drawer
+  displayAccountInfo();
+}
+
+// Toggle account info details
+document.getElementById('accountInfoBtn').addEventListener('click', () => {
+  const details = document.getElementById('accountDetails');
+  details.style.display = details.style.display === 'block' ? 'none' : 'block';
+});
+
+// Display login info
+function displayAccountInfo() {
+  const username = document.getElementById("username").value;
+  const role = document.getElementById("role").value;
+  
+  document.getElementById('accUser').textContent = username;
+  document.getElementById('accRole').textContent = role.toUpperCase();
 }
 
 // -------- ARTIST OVERLAY --------
@@ -685,6 +789,32 @@ document.addEventListener("click", function(e){
     }
   }
 });
+
+
+  function toggleDrawer() {
+    const drawer = document.getElementById('drawerPanel');
+    drawer.classList.toggle('open');
+  }
+
+  // Pag-set ng account info galing sa login
+  function displayAccountInfo() {
+    document.getElementById('accUser').textContent = username;
+    document.getElementById('accRole').textContent = role;
+  }
+
+  // I-update ang existing login function mo
+  const originalLogin = login;
+  login = function() {
+    originalLogin();
+    displayAccountInfo();
+  }
+
+  // Submit feedback
+  document.getElementById('feedbackForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Feedback submitted! Salamat 😊');
+    this.reset();
+  });
 </script>
 
 
