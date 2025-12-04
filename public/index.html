@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ArtHub — Home</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top-navbar" role="banner" aria-label="Main navigation">
+    <nav class="nav-left" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="commsion.html">Commissions</a>
+      <a href="arts.html">Arts</a>
+      <a href="contact.html">Contact</a>
+      <a href="create-account.html">Create Account</a>
+    </nav>
+    <div class="nav-center-badge" aria-hidden="true">ArtHUB</div>
+    <div class="nav-right" aria-label="Actions">
+      <a class="btn small" href="account-page.html">Sign in</a>
+    </div>
+  </header>
+
+  <main class="full-padding-wrapper container" id="main">
+    <section class="card" id="home">
+      <h2>ArtHUB</h2>
+      <img src="assets/Star.jpg" alt="Starry artwork example" />
+      <p><strong>Maligayang pagdating sa aming Pahina!</strong></p>
+      <p>Ang aming layunin ay lumikha ng isang bukas at makulay na espasyo para sa lahat ng mahilig sa sining. Dito sa <strong>ArtHUB</strong>, hinihikayat namin ang bawat isa na magpahayag ng kanilang sarili sa pamamagitan ng sining—mula sa pagguhit, pagpipinta, digital art, hanggang sa iba’t ibang malikhaing anyo.</p>
+      <p>Sumali na at maging kabahagi ng isang komunidad na tunay na nagpapahalaga sa sining at malikhaing pagpapahayag.</p>
+    </section>
+  </main>
+
+  <script>
+    // highlight active nav link
+    (function(){ const nav = document.querySelectorAll('.nav-left a'); nav.forEach(a=>{ if(location.pathname.endsWith(a.getAttribute('href'))|| location.pathname.endsWith('/'+a.getAttribute('href'))) a.classList.add('active'); }); })();
+  </script>
+</body>
+</html>

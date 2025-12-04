@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ArtHub — Account</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top-navbar" role="banner" aria-label="Main navigation">
+    <nav class="nav-left" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="commsion.html">Commissions</a>
+      <a href="arts.html">Arts</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-center-badge" aria-hidden="true">ArtHUB</div>
+    <div class="nav-right" aria-label="Actions">
+      <a class="btn small" href="account-page.html">Account</a>
+    </div>
+  </header>
+
+  <main class="full-padding-wrapper container">
+    <section class="card" id="account">
+      <h2>Account</h2>
+      <p class="lead">Sign in (this page is a placeholder — wire your auth here).</p>
+
+      <form id="loginForm">
+        <label for="roleSelect">Select Role</label>
+        <select id="roleSelect" name="role">
+          <option value="administrator">Administrator</option>
+          <option value="client">Client</option>
+          <option value="artist">Artist</option>
+        </select>
+
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="you@example.com" />
+
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="Password" />
+
+        <button type="submit" class="btn">Sign in</button>
+      </form>
+
+      <p style="margin-top:12px;color:#666;font-size:14px;">Tip: integrate Supabase or your auth provider on this page — let me know and I’ll add the exact code.</p>
+    </section>
+  </main>
+
+  <script>
+    (function(){ const nav = document.querySelectorAll('.nav-left a'); nav.forEach(a=>{ if(location.pathname.endsWith(a.getAttribute('href'))) a.classList.add('active'); }); })();
+    // minimal stub to prevent form submission
+    document.getElementById('loginForm')?.addEventListener('submit', e=>{ e.preventDefault(); alert('Sign in placeholder — integrate auth here.'); });
+  </script>
+</body>
+</html>
