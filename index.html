@@ -359,14 +359,14 @@
           <h2 id="homeHeading">ArtHUB</h2>
           <img src="assets/Star.jpg" alt="Starry artwork example" />
           <p><strong>Maligayang pagdating sa aming Pahina!</strong></p>
-          <p>Ang aming layunin ay lumikha ng isang bukas at makulay na espasyo para sa lahat ng mahilig sa sining. Dito sa <strong>ArtHUB</strong>, hinihikayat namin ang bawat isa na magpahayag ng kanilang sarili sa pamamagitan ng sining—mula sa pagguhit, pagpipinta, digital art, hanggang sa iba’t ibang malikhaing anyo.</p>
+          <p>Ang aming layunin ay lumikha ng isang bukas at makulay na espasyo para sa lahat ng mahilig sa sining. Dito sa <strong>ArtHUB</strong>, hinihikayat namin ang bawat isa na magpahayag ng kanilang sarili sa pamamagitan ng sining—mula sa pagguhit, pagpipinta, digital art, hanggang sa iba't ibang malikhaing anyo.</p>
           <p>Sumali na at maging kabahagi ng isang komunidad na tunay na nagpapahalaga sa sining at malikhaing pagpapahayag.</p>
         </section>
 
         <section id="Commissions" class="card" aria-labelledby="commHeading">
           <h1 id="commHeading">Selling, Commissions, and Bidding</h1>
           <p><strong>ArtHUB</strong> · <time datetime="2025-08-27">CREATE YOUR WORLD!</time></p>
-          <p>In today’s creative world, artists have many opportunities to share their work beyond simple exhibitions. Selling artworks allows creators to earn directly from their passion, whether through physical galleries or online platforms.</p>
+          <p>In today's creative world, artists have many opportunities to share their work beyond simple exhibitions. Selling artworks allows creators to earn directly from their passion, whether through physical galleries or online platforms.</p>
           <p>Commissions open another exciting door for artists. Clients can request personalized pieces that capture unique ideas, stories, or emotions.</p>
           <p>Art bidding provides a dynamic way of valuing creativity through auctions and competitive offers.</p>
 
@@ -596,7 +596,7 @@
             <h3>Surrealism</h3>
             <p>Surrealism blends dreamlike imagery with reality, often producing strange or fantastical scenes.</p>
             <p>Inspired by the subconscious, it allows artists to express thoughts beyond rational understanding.</p>
-            <p>It’s ideal for storytelling and imaginative concept exploration.</p>
+            <p>It's ideal for storytelling and imaginative concept exploration.</p>
             <div class="art-feedback">
               <div class="feedback-buttons">
                 <button class="like-btn">👍 Like <span class="like-count">0</span></button>
@@ -889,6 +889,7 @@
         return /\S+@\S+\.\S+/.test(email);
       }
 
+      // UPDATED: Simulated login for Netlify deployment
       async function attemptLogin(email, password, role) {
         if (!validateEmail(email)) {
           throw new Error('Please enter a valid email address.');
@@ -897,24 +898,16 @@
           throw new Error('Password must be at least 6 characters.');
         }
 
-        try {
-          const resp = await fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password, role })
-          });
-          if (!resp.ok) {
-            const err = await resp.json().catch(() => ({}));
-            throw new Error(err.message || 'Login failed.');
-          }
-          const data = await resp.json().catch(() => ({}));
-          return data;
-        } catch (err) {
-          if (err && (err.message === 'Failed to fetch' || err.message.includes('NetworkError'))) {
-            return { email, role, fallback: true };
-          }
-          throw err;
-        }
+        // Simulate API delay for realistic feel
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // For demo purposes, accept any valid email format
+        return { 
+          email, 
+          role, 
+          fallback: true,
+          name: email.split('@')[0] // Extract name from email for demo
+        };
       }
 
       loginBtn.addEventListener('click', async function () {
@@ -949,6 +942,7 @@
       closeResetModal.addEventListener('click', () => closeModal(resetPasswordModal));
       cancelReset.addEventListener('click', () => closeModal(resetPasswordModal));
 
+      // UPDATED: Account creation form handler
       createAccountForm.addEventListener('submit', async function (e) {
         e.preventDefault();
         createAccountMessage.textContent = '';
@@ -964,39 +958,28 @@
         if (password !== confirm) { createAccountMessage.textContent = 'Passwords do not match.'; return; }
 
         try {
-          const resp = await fetch('/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, password, role })
-          });
-          if (!resp.ok) {
-            const err = await resp.json().catch(() => ({}));
-            throw new Error(err.message || 'Registration failed.');
-          }
-          const data = await resp.json().catch(() => ({}));
+          // Simulate API delay
+          await new Promise(resolve => setTimeout(resolve, 300));
+          
           createAccountMessage.style.color = '#036';
           createAccountMessage.textContent = 'Account created. Signing you in...';
-          setTimeout(async () => {
+          
+          setTimeout(() => {
             closeModal(createAccountModal);
-            await attemptLogin(email, password, role).then(showAppAfterLogin).catch(() => {
-              createAccountMessage.textContent = 'Account created. Please sign in.';
+            showAppAfterLogin({ 
+              email, 
+              role, 
+              name,
+              fallback: true 
             });
           }, 600);
         } catch (err) {
-          if (err && (err.message === 'Failed to fetch' || err.message.includes('NetworkError'))) {
-            createAccountMessage.style.color = '#036';
-            createAccountMessage.textContent = 'Account created (local demo). Signing you in...';
-            setTimeout(() => {
-              closeModal(createAccountModal);
-              showAppAfterLogin({ email, role, fallback: true });
-            }, 600);
-            return;
-          }
           createAccountMessage.style.color = '#b00020';
-          createAccountMessage.textContent = err.message || 'Registration failed.';
+          createAccountMessage.textContent = 'Registration failed. Please try again.';
         }
       });
 
+      // UPDATED: Password reset form handler
       resetPasswordForm.addEventListener('submit', async function (e) {
         e.preventDefault();
         resetPasswordMessage.textContent = '';
@@ -1004,25 +987,14 @@
         if (!validateEmail(email)) { resetPasswordMessage.style.color = '#b00020'; resetPasswordMessage.textContent = 'Please enter a valid email.'; return; }
 
         try {
-          const resp = await fetch('/api/reset-password', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-          });
-          if (!resp.ok) {
-            const err = await resp.json().catch(() => ({}));
-            throw new Error(err.message || 'Unable to send reset link.');
-          }
+          // Simulate API delay
+          await new Promise(resolve => setTimeout(resolve, 300));
+          
           resetPasswordMessage.style.color = '#036';
-          resetPasswordMessage.textContent = 'If that email exists, a reset link has been sent.';
+          resetPasswordMessage.textContent = 'Reset link sent (demo). Check your email.';
         } catch (err) {
-          if (err && (err.message === 'Failed to fetch' || err.message.includes('NetworkError'))) {
-            resetPasswordMessage.style.color = '#036';
-            resetPasswordMessage.textContent = 'Reset link sent (demo). Check your email.';
-            return;
-          }
           resetPasswordMessage.style.color = '#b00020';
-          resetPasswordMessage.textContent = err.message || 'Unable to send reset link.';
+          resetPasswordMessage.textContent = 'Unable to send reset link.';
         }
       });
 
@@ -1137,7 +1109,7 @@
             const li = document.createElement('li');
             li.innerHTML = `<span class="artist-name">${a.name}</span><span style="color:#666;font-size:13px;">${a.address}</span>`;
             li.addEventListener('click', () => {
-              artistProfileImg.src = a.img;
+              artistProfileImg.src = a.image;
               artistProfileName.textContent = a.name;
               artistProfileAge.textContent = `Age: ${a.age}`;
               artistProfileAddress.textContent = a.address;
@@ -1245,6 +1217,8 @@
 
       const contactForm = document.getElementById('contactForm');
       const contactNote = document.getElementById('contactNote');
+      
+      // UPDATED: Contact form handler
       if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
           e.preventDefault();
@@ -1258,27 +1232,15 @@
             return;
           }
           try {
-            const resp = await fetch('/api/contact', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name, email, message })
-            });
-            if (!resp.ok) {
-              const err = await resp.json().catch(() => ({}));
-              throw new Error(err.message || 'Failed to send message.');
-            }
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
             contactNote.style.color = '#036';
-            contactNote.textContent = 'Message sent. Thank you!';
+            contactNote.textContent = 'Message sent (demo). Thank you!';
             contactForm.reset();
           } catch (err) {
-            if (err && (err.message === 'Failed to fetch' || err.message.includes('NetworkError'))) {
-              contactNote.style.color = '#036';
-              contactNote.textContent = 'Message sent (demo).';
-              contactForm.reset();
-              return;
-            }
             contactNote.style.color = '#b00020';
-            contactNote.textContent = err.message || 'Failed to send message.';
+            contactNote.textContent = 'Failed to send message.';
           }
         });
       }
@@ -1291,6 +1253,72 @@
           .replace(/"/g, '&quot;')
           .replace(/'/g, '&#039;');
       }
+
+      // Demo login credentials for easier testing
+      const demoCredentials = {
+        email: 'demo@arthub.com',
+        password: 'demo123',
+        role: 'client'
+      };
+
+      // Optionally pre-fill the login form with demo credentials
+      window.addEventListener('DOMContentLoaded', () => {
+        // Add a demo login button
+        const demoLoginBtn = document.createElement('button');
+        demoLoginBtn.textContent = 'Try Demo Login';
+        demoLoginBtn.style.cssText = `
+          width: 100%;
+          margin-top: 10px;
+          padding: 10px;
+          background: #4caf50;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background 0.2s ease;
+        `;
+        demoLoginBtn.addEventListener('mouseenter', () => {
+          demoLoginBtn.style.background = '#45a049';
+        });
+        demoLoginBtn.addEventListener('mouseleave', () => {
+          demoLoginBtn.style.background = '#4caf50';
+        });
+        demoLoginBtn.addEventListener('click', async () => {
+          loginMessage.textContent = '';
+          loginBtn.disabled = true;
+          loginBtn.textContent = 'Signing in...';
+          
+          // Pre-fill the form with demo credentials
+          emailInput.value = demoCredentials.email;
+          passwordInput.value = demoCredentials.password;
+          roleSelect.value = demoCredentials.role;
+          
+          try {
+            const userData = await attemptLogin(demoCredentials.email, demoCredentials.password, demoCredentials.role);
+            loginMessage.style.color = '#036';
+            loginMessage.textContent = 'Demo login successful.';
+            setTimeout(() => showAppAfterLogin(userData), 350);
+          } catch (err) {
+            loginMessage.style.color = '#b00020';
+            loginMessage.textContent = err.message || 'Login failed.';
+          } finally {
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Log In';
+          }
+        });
+        
+        // Insert after the login button
+        const loginCard = document.getElementById('loginCard');
+        const loginBtnContainer = loginCard.querySelector('#loginBtn').parentNode;
+        loginBtnContainer.parentNode.insertBefore(demoLoginBtn, loginBtnContainer.nextSibling);
+        
+        // Also add a quick tip
+        const demoTip = document.createElement('div');
+        demoTip.style.cssText = 'margin-top: 8px; font-size: 14px; color: #666; text-align: center;';
+        demoTip.textContent = 'Tip: Use any valid email and password (min 6 chars)';
+        loginCard.appendChild(demoTip);
+      });
 
       try {
         if (window.__USER__ && window.__USER__.email) {
