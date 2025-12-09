@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ArtHUB — Login</title>
+<style>
+:root{
+  --bg:lightblue;
+  --card-bg:#ffffff;
+  --primary-color:#1e88e5;
+  --accent:#4caf50;
+  --text:#222;
+  --muted:#666;
+  --danger:#b00020;
+  --radius:10px;
+  --gap:12px;
+  --max-width:520px;
+  --shadow: 0 6px 18px rgba(20,20,30,0.08);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color-scheme: light;
+}
+
+/* Page layout */
+html,body{
+  height:100%;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+main{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:24px;
+  box-sizing:border-box;
+}
+
+/* Card */
+.card{
+  background:var(--card-bg);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:20px;
+  width:100%;
+  max-width:var(--max-width);
+  box-sizing:border-box;
+}
+
+/* Login specific */
+#loginCard h1{
+  margin:0 0 22px 0;
+  font-size:1.5rem;
+  color:var(--primary-color);
+}
+
+label{
+  display:block;
+  margin-top:10px;
+  margin-bottom:6px;
+  font-weight:600;
+  font-size:0.95rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+  font-size:1rem;
+  box-sizing:border-box;
+  background:transparent;
+  color:var(--text);
+  transition:box-shadow .12s, border-color .12s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline:none;
+  border-color:var(--primary-color);
+  box-shadow:0 0 0 3px rgba(30,136,229,0.08);
+}
+
+/* Buttons */
+button{
+  font:inherit;
+  border-radius:8px;
+  padding:10px 12px;
+  border:0;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.primary{
+  background:var(--primary-color);
+  color:#fff;
+  flex:1;
+}
+
+.secondary{
+  background:var(--accent);
+  color:#fff;
+  flex:1;
+}
+
+.link-btn{
+  background:transparent;
+  border:none;
+  color:var(--primary-color);
+  font-weight:700;
+  padding:6px 8px;
+  cursor:pointer;
+}
+
+/* Layout helpers */
+.row{
+  display:flex;
+  align-items:center;
+  gap:var(--gap);
+  margin-top:12px;
+}
+
+.space-between{
+  justify-content:space-between;
+}
+
+.small-gap{
+  gap:8px;
+}
+
+.status-msg{
+  min-height:1.2em;
+  text-align:right;
+  color:var(--danger);
+  font-size:0.95rem;
+}
+
+/* Inline signup */
+.signup-inline{
+  margin-top:12px;
+  font-size:14px;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* Accessibility and responsive */
+@media (max-width:520px){
+  .row{ flex-direction:column; align-items:stretch; }
+  .primary, .secondary{ width:100%; }
+  #loginCard{ padding:16px; border-radius:8px; }
+}
+
+/* Utility */
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+</style>
+   
+ </style>
+</head>
+<body>
+  <main id="mainContent" role="main" aria-live="polite">
+    <section id="loginPage" aria-labelledby="loginTitle">
+      <div id="loginCard" class="card" role="region" aria-label="Login">
+        <h1 id="loginTitle">Welcome to ArtHub</h1>
+
+        <label for="roleSelect">Select Role</label>
+        <select id="roleSelect" name="role" aria-label="Select role">
+          <option value="administrator">Administrator</option>
+          <option value="client">Client</option>
+          <option value="artist">Artist</option>
+        </select>
+
+        <label for="emailInput">Email</label>
+        <input id="emailInput" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+
+        <label for="passwordInput">Password</label>
+        <input id="passwordInput" name="password" type="password" placeholder="Password" autocomplete="current-password" required />
+
+        <div class="row space-between">
+          <button id="loginBtn" type="button" class="primary">Log In</button>
+          <button id="showCreateAccountBtn" type="button" class="secondary">Create Account</button>
+        </div>
+
+        <div class="row space-between small-gap">
+          <button id="resetPasswordBtn" type="button" class="link-btn">Forgot password?</button>
+          <div id="loginMessage" role="status" aria-live="polite" class="status-msg"></div>
+        </div>
+
+        <div class="signup-inline">
+          <span>Don't have an account? </span>
+          <button id="inlineCreateBtn" type="button" class="link-btn">Create one</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
